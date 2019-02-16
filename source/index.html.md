@@ -6,10 +6,11 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - ruby
   - python
   - javascript
+  - objective_c
+  - swift
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - © TrailerVote
 
 includes:
   - errors
@@ -19,11 +20,137 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+The TrailerVote SDK for iOS is a proprietary software library that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema, and/or rate trailers when watched on the phone. Users are later sent push notification reminders to buy tickets via the app when the movie opens in theatres.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Features include:
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+- Theatre-Optimized Audio Recognition: Optimized for complex cinema environments including 7+ speakers, reverb, echo, deep bass
+- Branding & Styling: Custom branding for listening experience with your choice of background colors and logo.
+- Offline audio recognition: Minimizes the need for network connectivity at the cinema by caching content
+- Custom Recognition: Identify trailer content, loyalty program promotions, or advertisements and serve the corresponding interactions.
+
+# Requirements
+
+In order to use TrailerVote technology, you must have the following:
+
+- A mobile app
+- Xcode 9 or higher
+- iOS 10 or higher
+
+# iOS
+## Getting Started
+
+1. Download & unzip the latest iOS SDK from https://trailervote.com/downloads/ios-sdk.
+2. Drag TrailerVoteSDK.framework into your Xcode project tree:
+  ![alt text](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
+3. In your app Target Settings -> General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
+  ![alt text](/images/img_framework_embedding.png "TrailerVote Embedding")
+
+```swift
+import TrailerVoteSDK
+```
+
+The TrailerVote SDK has to be imported before it can be used.
+
+
+
+## Authentication
+
+> Simply call the class method to access the singleton instance.
+
+```swift
+TVTrailerVoteFactory.setupCredentials(withUsername: "ReplaceThisWithAKeyWeProvide",
+                                          password: "ReplaceThisWithAPasswordWeProvide")
+TVTrailerVoteFactory.setupAnalyticsToken("ReplaceThisWithATokenWeProvide")
+```
+
+```objective_c
+[TVTrailerVoteFactory setupCredentialsWithUsername:@"ReplaceThisWithAKeyWeProvide"
+                                          password:@"ReplaceThisWithAPasswordWeProvide"];
+
+```
+
+The SDK requires that credentials be provided via the setupCredentials and setupAnalyticsToken methods before use. Please note that the invocation of this method should precede any other calls on the SDK factory class, otherwise an exception will be thrown indicating the absence of credentials.
+
+
+## Preloading the content
+
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] launchDataPreload]
+```
+
+```swift
+TVTrailerVoteFactory.shared().launchDataPreload()
+```
+
+The TrailerVote SDK To start the pre-loading process of the trailer recognition data, call the launchDataPreload method. Once the data is downloaded, the trailer recognition feature will be available in offline.
+
+
+
+##Enabling and configuring the TrailerVote In-Theatre feature
+The main feature of the SDK is the movie trailers recognition. We use the TVAudioRecognitionViewController class for presenting a full-screen user interface and for handling the recognition processes.
+![alt text](/images/img_recognition_screen.png "TrailerVote Listening Screen")
+
+```objective_c
+TVAudioRecognitionViewController * audioRecognitionVC = [[TVTrailerVoteFactory sharedFactory] audioRecognitionViewController];
+```
+
+```swift
+let audioRecognitionVC = TVTrailerVoteFactory.shared().audioRecognitionViewController()
+```
+
+Instantiate the view controller by calling the [TVTrailerVoteFactory audioRecognitionViewController] method of the main factory class:
+
+
+##Presenting the Voting Experience
+
+```objective_c
+[self presentViewController:audioRecognitionVC animated:YES completion:nil];
+```
+
+```swift
+present(audioRecognitionVC, animated: true, completion: nil)
+```
+
+After creating an instance, the audio recognition view controller can be easily presented using UIKit present(_:animated:completion:) method:
+
+
+When the movie trailer is recognized, the voting buttons are shown with the prompt for the user to vote.
+![alt text](/images/img_recognition_screen_voting.png "TrailerVote Listening Screen")
+After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.
+
+Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the “Put your phones away” view.
+
+##Branding
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] setPartnerLogoImage:]
+```
+
+```swift
+TVTrailerVoteFactory.shared().setPartnerLogoImage(_:)
+```
+
+The SDK provides the ability to set the logo image displayed on the initial movie card. Call the method providing your own logo image to use.
+
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] setDefaultVotingCardBackgroundImage:]
+```
+
+```swift
+TVTrailerVoteFactory.shared().setDefaultVotingCardBackgroundImage(_:)
+```
+
+You can override the default voting card background as well by calling the method providing your own background image to use.
+
+
+
+
+# Android
+
+
 
 # Authentication
 
