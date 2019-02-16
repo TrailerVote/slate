@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: TrailerVote Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
@@ -20,7 +20,7 @@ search: true
 
 # Introduction
 
-The TrailerVote SDK for iOS is a proprietary software library that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema, and/or rate trailers when watched on the phone. Users are later sent push notification reminders to buy tickets via the app when the movie opens in theatres.
+The TrailerVote is a proprietary software library that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema, and/or rate trailers when watched on the phone. Users are later sent push notification reminders to buy tickets via the app when the movie opens in theatres.
 
 Features include:
 
