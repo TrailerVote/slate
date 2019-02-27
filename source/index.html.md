@@ -88,7 +88,7 @@ The TrailerVote SDK To start the pre-loading process of the trailer recognition 
 
 
 
-##Enabling and configuring the TrailerVote In-Theatre feature
+##In-Theatre Voting Experience
 The main feature of the SDK is the movie trailers recognition. We use the TVAudioRecognitionViewController class for presenting a full-screen user interface and for handling the recognition processes.
 ![alt text](/images/img_recognition_screen.png "TrailerVote Listening Screen")
 
@@ -102,8 +102,6 @@ let audioRecognitionVC = TVTrailerVoteFactory.shared().audioRecognitionViewContr
 
 Instantiate the view controller by calling the [TVTrailerVoteFactory audioRecognitionViewController] method of the main factory class:
 
-
-##Presenting the Voting Experience
 
 ```objective_c
 [self presentViewController:audioRecognitionVC animated:YES completion:nil];
@@ -122,7 +120,7 @@ After the user votes, the feedback is recorded internally in the SDK and transmi
 
 Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the “Put your phones away” view.
 
-##Branding
+##Logo & Background customization
 
 ```objective_c
 [[TVTrailerVoteFactory sharedFactory] setPartnerLogoImage:]
@@ -144,6 +142,109 @@ TVTrailerVoteFactory.shared().setDefaultVotingCardBackgroundImage(_:)
 ```
 
 You can override the default voting card background as well by calling the method providing your own background image to use.
+
+
+
+##Video Player with Voting
+
+![alt text](/images/img_video_player.png "TrailerVote Video Player")
+
+> To get the video player instance, call the method. The video player will automatically manage the playback queue.
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] videoPlayerViewController]
+```
+
+```swift
+TVTrailerVoteFactory.shared().videoPlayerViewController()
+```
+
+Because moviegoers can watch trailers in your movie app, we believe its best to provide them the option to note which movies they wish to see or not. We recommend replacing your video player with the TrailerVote Video Player. The TrailerVote Video Player will provide a prompt for voting during the video playback.
+
+
+##Carousel of Movie Trailers
+
+![alt text](/images/img_movies_carousel.png "TrailerVote Movies Carousel")
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] productCarouselViewControllerEmbeddedInParentViewController:parentView:]
+```
+
+```swift
+TVTrailerVoteFactory.shared().productCarouselViewControllerEmbedded(inParentViewController:parentView:)
+```
+
+
+If you wish to feature a carousel full of movie trailers and the ability to watch and vote on them, the TrailerVote SDK has this feature built in. The movies carousel view can easily be integrated into your UI by using the following method. The view includes the necessary logic for fetching the movies list from all the trailers you have provided TrailerVote. Tapping on a carousel item will launch the TrailerVote Video Player, playing the video and show the voting buttons.
+
+##Displaying the Watchlist
+
+![alt text](/images/img_voted_movies_feed.png "TrailerVote Watchlist")
+
+>To embed the view into your UI, call the 
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] votedTrailersFeedViewControllerEmbeddedInParentViewController:parentView:]
+
+```
+
+```swift
+TVTrailerVoteFactory.shared().votedTrailersFeedViewControllerEmbedded(inParentViewController:parentView:)
+```
+
+
+The SDK also provides the voted movies feed view for presenting the list of movies the user has previously voted on. The view encapsulates the necessary logic for fetching the voted movies list, provides the capability of filtering the movies by the vote type (all, positive, neutral or negative), as well as launching the TrailerVote Video Player upon the selection of the particular item in the feed.
+
+ 
+##Analytics and Notifications
+
+```objective_c
+[TVTrailerVoteFactory setupAnalyticsToken:]
+
+```
+
+```swift
+TVTrailerVoteFactory.setupAnalyticsToken(_:)
+```
+
+
+
+Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the method. The key events will be sent automatically by the SDK.
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] enablePushNotificationsWithDeviceID:]
+
+
+```
+
+```swift
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+  TVTrailerVoteFactory.shared().enablePushNotifications(withDeviceID: deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
+}
+```
+
+For enabling the remote notifications capability, start by calling the method. The deviceID parameter is the hexadecimal string retrieved from the device token provided by the iOS in your application’s delegate class application(application:didRegisterForRemoteNotificationsWithDeviceToken:) method.
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:]
+```
+
+```swift
+TVTrailerVoteFactory.shared().processPushNotificationPayload(_:)
+```
+
+Upon receiving the remote notification’s payload dictionary in application(_:didReceiveRemoteNotification:completionHandler:) or application(_:didFinishLaunchingWithOptions:) method call the method in order for the SDK to process and react accordingly to the notification’s payload data.
+
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] disablePushNotifications] 
+```
+
+```swift
+TVTrailerVoteFactory.shared().disablePushNotifications()
+```
+
+In some time later, when you wish to stop the remote notifications capability, call the method to remove the current device from the notifications recipients list.
 
 
 
