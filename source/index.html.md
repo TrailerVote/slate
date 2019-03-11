@@ -2,43 +2,37 @@
 title: TrailerVote Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
   - objective_c
   - swift
 
 toc_footers:
   - © TrailerVote
 
-includes:
-  - errors
 
 search: true
 ---
 
 # Introduction
 
-The TrailerVote is a proprietary software library that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema, and/or rate trailers when watched on the phone. Users are later sent push notification reminders to buy tickets via the app when the movie opens in theatres.
+The TrailerVote is a innovative software service that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema. Users are later sent notifications as a reminder that tickets for the movie they wanted see are now on sale.
 
 Features include:
 
 - Theatre-Optimized Audio Recognition: Optimized for complex cinema environments including 7+ speakers, reverb, echo, deep bass
 - Branding & Styling: Custom branding for listening experience with your choice of background colors and logo.
-- Offline audio recognition: Minimizes the need for network connectivity at the cinema by caching content
+- Offline audio recognition: Minimizes the need for network connectivity at the cinema.
 - Custom Recognition: Identify trailer content, loyalty program promotions, or advertisements and serve the corresponding interactions.
 
 # Requirements
 
 In order to use TrailerVote technology, you must have the following:
 
-- A mobile app
+- A movie-related mobile app
 - Xcode 9 or higher
 - iOS 10 or higher
 
 # iOS
-## Getting Started
+## Installation
 
 1. Download & unzip the latest iOS SDK from https://trailervote.com/downloads/ios-sdk.
 2. Drag TrailerVoteSDK.framework into your Xcode project tree:
@@ -46,46 +40,169 @@ In order to use TrailerVote technology, you must have the following:
 3. In your app Target Settings -> General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
   ![alt text](/images/img_framework_embedding.png "TrailerVote Embedding")
 
+##Getting Started
+
 ```swift
 import TrailerVoteSDK
 ```
 
+```objective_c
+#import <TrailerVoteSDK/TrailerVoteSDK.h>
+```
+
 The TrailerVote SDK has to be imported before it can be used.
 
+</br>
+</br>
 
 
-## Authentication
-
-> Simply call the class method to access the singleton instance.
 
 ```swift
-TVTrailerVoteFactory.setupCredentials(withUsername: "ReplaceThisWithAKeyWeProvide",
-                                          password: "ReplaceThisWithAPasswordWeProvide")
-TVTrailerVoteFactory.setupAnalyticsToken("ReplaceThisWithATokenWeProvide")
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+
+        // setup the SDK credentials
+        TVTrailerVoteFactory.setupCredentials(withUsername: "ReplaceThisWithAKeyWeProvide", password: "ReplaceThisWithAPasswordWeProvide")
+    
+        // launch the trailer recognition feature data preload
+        TVTrailerVoteFactory.shared().launchDataPreload()
+
+        // override the default partner logo image
+        let partnerLogoImage = UIImage(named: "logo")
+        TVTrailerVoteFactory.shared().setPartnerLogoImage(partnerLogoImage)
+     
+        // process a remote notifications payload, if the app was launched by tapping the notification
+        if let remoteNotificationPayload = launchOptions?[.remoteNotification] as? [AnyHashable: Any] {
+            TVTrailerVoteFactory.shared().processPushNotificationPayload(remoteNotificationPayload)
+        }
+    
+        return true
+
+    }
 ```
 
 ```objective_c
-[TVTrailerVoteFactory setupCredentialsWithUsername:@"ReplaceThisWithAKeyWeProvide"
-                                          password:@"ReplaceThisWithAPasswordWeProvide"];
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@property (nonatomic) UIWindow * window;
+@end
 
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // setup the SDK credentials
+    [TVTrailerVoteFactory setupCredentialsWithUsername:@"ReplaceThisWithAKeyWeProvide" password:@"ReplaceThisWithAPasswordWeProvide"];
+    
+    // launch the trailer recognition feature data preload
+    [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
+    
+    // override the default partner logo image
+    UIImage * partnerLogoImage = [UIImage imageNamed:@"logo"];
+    [[TVTrailerVoteFactory sharedFactory] setPartnerLogoImage:partnerLogoImage];
+    
+    // process a remote notifications payload, if the app was launched by tapping the notification
+    if (options[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        NSDictionary * payload = (NSDictionary *)options[UIApplicationLaunchOptionsRemoteNotificationKey];
+        [[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:payload];
+    }
+    
+    return YES;
+}
 ```
 
-The SDK requires that credentials be provided via the setupCredentials and setupAnalyticsToken methods before use. Please note that the invocation of this method should precede any other calls on the SDK factory class, otherwise an exception will be thrown indicating the absence of credentials.
 
+The `setupCredentials`, `launchDataPreload`, `setPartnerLogoImage`, and `processPushNotificationPayload` functions can be included in the `didFinishLaunchingWithOptions` function.
 
-## Preloading the content
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] launchDataPreload]
-```
 
 ```swift
-TVTrailerVoteFactory.shared().launchDataPreload()
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        // enable the remote notifications feature once the device token is received
+        TVTrailerVoteFactory.shared().enablePushNotifications(withDeviceID: deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        // get the SDK to process received remote notification payload
+        TVTrailerVoteFactory.shared().processPushNotificationPayload(userInfo)
+        
+        completionHandler(.noData)
+    }
+}
 ```
 
-The TrailerVote SDK To start the pre-loading process of the trailer recognition data, call the launchDataPreload method. Once the data is downloaded, the trailer recognition feature will be available in offline.
+```objective_c
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+    const unsigned * tokenBytes = [devToken bytes];
+    NSString * hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
+                         ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
+                         ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
+                         ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
 
+     // enable the remote notifications feature once the device token is received
+     [[TVTrailerVoteFactory sharedFactory] enablePushNotificationsWithDeviceID:hexToken];   
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
+    // get the SDK to process received remote notification
+    [[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:userInfo];
+}
+
+@end
+```
+
+In order to receive the notifications from TrailerVote, you have to enable notifications.
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+
+```swift
+TVTrailerVoteFactory.shared().logEvent("ticket-purchased", identifier: "your-movie-identifier", quantity: "number-of-tickets", value: "sum-of-ticket-prices", fees:"convenience-fees-charged", currency:"three-letter-currency-code")
+```
+
+```objective_c
+[[TVTrailerVoteFactory sharedFactory] logEvent:@"ticket-purchased" identifier:@"your-cinema-identifier" quantity:@"number-of-tickets" value:@"sum-of-ticket-prices" fees:"convenience-fees-charged" currency:@"three-letter-currency-code"];
+```
+
+To determine the effectiveness of notifications and reminders, use the `logEvent` method to report the completion of a transaction (in this case a ticket purchase) to TrailerVote. These results will be reflected in the client's analytics.
 
 
 ##In-Theatre Voting Experience
@@ -94,23 +211,15 @@ The main feature of the SDK is the movie trailers recognition. We use the TVAudi
 
 ```objective_c
 TVAudioRecognitionViewController * audioRecognitionVC = [[TVTrailerVoteFactory sharedFactory] audioRecognitionViewController];
-```
-
-```swift
-let audioRecognitionVC = TVTrailerVoteFactory.shared().audioRecognitionViewController()
-```
-
-Instantiate the view controller by calling the [TVTrailerVoteFactory audioRecognitionViewController] method of the main factory class:
-
-
-```objective_c
 [self presentViewController:audioRecognitionVC animated:YES completion:nil];
 ```
 
 ```swift
+let audioRecognitionVC = TVTrailerVoteFactory.shared().audioRecognitionViewController()
 present(audioRecognitionVC, animated: true, completion: nil)
 ```
 
+Instantiate the view controller by calling the `[TVTrailerVoteFactory audioRecognitionViewController]` method of the main factory class:
 After creating an instance, the audio recognition view controller can be easily presented using UIKit present(_:animated:completion:) method:
 
 
@@ -119,63 +228,6 @@ When the movie trailer is recognized, the voting buttons are shown with the prom
 After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.
 
 Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the “Put your phones away” view.
-
-##Logo & Background customization
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] setPartnerLogoImage:]
-```
-
-```swift
-TVTrailerVoteFactory.shared().setPartnerLogoImage(_:)
-```
-
-The SDK provides the ability to set the logo image displayed on the initial movie card. Call the method providing your own logo image to use.
-
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] setDefaultVotingCardBackgroundImage:]
-```
-
-```swift
-TVTrailerVoteFactory.shared().setDefaultVotingCardBackgroundImage(_:)
-```
-
-You can override the default voting card background as well by calling the method providing your own background image to use.
-
-
-
-##Video Player with Voting
-
-![alt text](/images/img_video_player.png "TrailerVote Video Player")
-
-> To get the video player instance, call the method. The video player will automatically manage the playback queue.
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] videoPlayerViewController]
-```
-
-```swift
-TVTrailerVoteFactory.shared().videoPlayerViewController()
-```
-
-Because moviegoers can watch trailers in your movie app, we believe its best to provide them the option to note which movies they wish to see or not. We recommend replacing your video player with the TrailerVote Video Player. The TrailerVote Video Player will provide a prompt for voting during the video playback.
-
-
-##Carousel of Movie Trailers
-
-![alt text](/images/img_movies_carousel.png "TrailerVote Movies Carousel")
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] productCarouselViewControllerEmbeddedInParentViewController:parentView:]
-```
-
-```swift
-TVTrailerVoteFactory.shared().productCarouselViewControllerEmbedded(inParentViewController:parentView:)
-```
-
-
-If you wish to feature a carousel full of movie trailers and the ability to watch and vote on them, the TrailerVote SDK has this feature built in. The movies carousel view can easily be integrated into your UI by using the following method. The view includes the necessary logic for fetching the movies list from all the trailers you have provided TrailerVote. Tapping on a carousel item will launch the TrailerVote Video Player, playing the video and show the voting buttons.
 
 ##Displaying the Watchlist
 
@@ -193,47 +245,8 @@ TVTrailerVoteFactory.shared().votedTrailersFeedViewControllerEmbedded(inParentVi
 ```
 
 
-The SDK also provides the voted movies feed view for presenting the list of movies the user has previously voted on. The view encapsulates the necessary logic for fetching the voted movies list, provides the capability of filtering the movies by the vote type (all, positive, neutral or negative), as well as launching the TrailerVote Video Player upon the selection of the particular item in the feed.
 
- 
-##Analytics and Notifications
-
-```objective_c
-[TVTrailerVoteFactory setupAnalyticsToken:]
-
-```
-
-```swift
-TVTrailerVoteFactory.setupAnalyticsToken(_:)
-```
-
-
-
-Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the method. The key events will be sent automatically by the SDK.
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] enablePushNotificationsWithDeviceID:]
-
-
-```
-
-```swift
-func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-  TVTrailerVoteFactory.shared().enablePushNotifications(withDeviceID: deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
-}
-```
-
-For enabling the remote notifications capability, start by calling the method. The deviceID parameter is the hexadecimal string retrieved from the device token provided by the iOS in your application’s delegate class application(application:didRegisterForRemoteNotificationsWithDeviceToken:) method.
-
-```objective_c
-[[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:]
-```
-
-```swift
-TVTrailerVoteFactory.shared().processPushNotificationPayload(_:)
-```
-
-Upon receiving the remote notification’s payload dictionary in application(_:didReceiveRemoteNotification:completionHandler:) or application(_:didFinishLaunchingWithOptions:) method call the method in order for the SDK to process and react accordingly to the notification’s payload data.
+#Additional Notes
 
 
 ```objective_c
@@ -245,223 +258,4 @@ TVTrailerVoteFactory.shared().disablePushNotifications()
 ```
 
 In some time later, when you wish to stop the remote notifications capability, call the method to remove the current device from the notifications recipients list.
-
-
-
-
-# Android
-
-
-
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
 
