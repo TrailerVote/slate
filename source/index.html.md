@@ -224,7 +224,7 @@ After creating an instance, the audio recognition view controller can be easily 
 
 
 When the movie trailer is recognized, the voting buttons are shown with the prompt for the user to vote.
-![alt text](/images/img_recognition_screen_voting.png "TrailerVote Listening Screen")
+![alt text](/images/recognized_avengers.png "TrailerVote Listening Screen")
 After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.
 
 Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the “Put your phones away” view.
