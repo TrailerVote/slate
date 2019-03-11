@@ -207,7 +207,7 @@ To determine the effectiveness of notifications and reminders, use the `logEvent
 
 ##In-Theatre Voting Experience
 The main feature of the SDK is the movie trailers recognition. We use the TVAudioRecognitionViewController class for presenting a full-screen user interface and for handling the recognition processes.
-![alt text](/images/img_recognition_screen.png "TrailerVote Listening Screen")
+![alt text](/images/img_listening_screen.png "TrailerVote Listening Screen")
 
 ```objective_c
 TVAudioRecognitionViewController * audioRecognitionVC = [[TVTrailerVoteFactory sharedFactory] audioRecognitionViewController];
