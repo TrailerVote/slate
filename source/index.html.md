@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - swift
 
 toc_footers:
-  - © TrailerVote. CONFIDENTIAL MATERIAL.
+  - © TrailerVote. CONFIDENTIAL.
 
 
 search: true
