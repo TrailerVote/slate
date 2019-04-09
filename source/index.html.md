@@ -34,7 +34,7 @@ In order to use TrailerVote technology, you must have the following:
 # iOS
 ## Installation
 
-1. Download & unzip the latest iOS SDK from https://trailervote.com/downloads/ios-sdk.
+1. Contact TrailerVote for the the latest iOS SDK.
 2. Drag TrailerVoteSDK.framework into your Xcode project tree:
   ![alt text](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
 3. In your app Target Settings -> General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
