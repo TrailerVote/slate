@@ -202,19 +202,19 @@ Because moviegoers watch trailers in your movie app, we recommend replacing your
 @implementation ViewController
 - (void)launchVideoPlayer
 {
-    [self presentViewController:[[TVTrailerVoteFactory sharedFactory] videoPlayerViewController] animated:YES];
+    [[TVTrailerVoteFactory sharedFactory] presentVideoPlayerViewController:self movieTrailerURL:<MOVIE_TRAILER_URL>];
 }
 @end
 ```
 ```swift
 class ViewController: UIViewController {
     func launchVideoPlayer() {
-        self.present(TVTrailerVoteFactory.shared().videoPlayerViewController(), animated: true)
+        TVTrailerVoteFactory.shared().presentVideoPlayerViewController(self, movieTrailerURL: <MOVIE_TRAILER_URL>)
     }
 }
 ```
 
-To get the video player instance, call the `[[TVTrailerVoteFactory sharedFactory] videoPlayerViewController]`/`TVTrailerVoteFactory.shared().videoPlayerViewController()` method. The video player will automatically manage the playback queue and present the voting UI in order for user to vote on shown movies.
+To present the video player, call the `[[TVTrailerVoteFactory sharedFactory] presentVideoPlayerViewController:movieTrailerURL:]`/`TVTrailerVoteFactory.shared().presentVideoPlayerViewController(_:, movieTrailerURL:)` method. The video player will automatically manage the playback queue and present the voting UI in order for user to vote on shown movies.
 
 ## Integrating the Movies carousel view
 
