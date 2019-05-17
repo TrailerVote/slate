@@ -42,6 +42,8 @@ In order to use TrailerVote technology, you must have the following:
 
 ##Getting Started
 
+> Importing the SDK
+
 ```swift
 import TrailerVoteSDK
 ```
@@ -51,9 +53,7 @@ import TrailerVoteSDK
 
 Import the SDK to use the public interface and call methods.
 
-<br />
-<br />
-<br />
+> Accessing the SDK's factory class singleton instance
 
 ```swift
 TVTrailerVoteFactory.shared().methodName()
@@ -67,6 +67,8 @@ TrailerVote SDK provides the main factory class `TVTrailerVoteFactory`, containi
 Simply call the `[TVTrailerVoteFactory sharedFactory]`/`TVTrailerVoteFactory.shared()` class method to access the singleton instance.
 
 ## Configuring and initializing the TrailerVote SDK
+
+> Setting up the credentials
 
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -90,6 +92,8 @@ The initialization process of the SDK begins immediately upon the first invocati
 
 In order for the **TrailerVote In-Theatre feature** to work offline, the movie trailers recognition data needs to be downloaded from the network.
 
+> Launching trailer recognition feature data pre-loading process
+
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -110,7 +114,31 @@ To start the pre-loading process of the trailer recognition data, call the `[[TV
 
 Once the data is downloaded, the trailer recognition feature will be available in offline, but please keep the data pre-load call triggered on your app launch so that the SDK could update the recognition data.
 
+> Forwarding the did finish launching method parameters to the SDK
+
+```objective_c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
+    [TVTrailerVoteFactory application:application didFinishLaunchingWithOptions:launchOptions];
+    [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
+    return YES;
+}
+```
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
+    TVTrailerVoteFactory.application(application, didFinishLaunchingWithOptions: launchOptions ?? [:])
+    TVTrailerVoteFactory.shared().launchDataPreload()
+    return true
+}
+```
+
+In order for the SDK to infer the application launch method (either by clicking the remote notification, opening a deep link or a manual launch), call the `[TVTrailerVoteFactory application:didFinishLaunchingWithOptions:]`/`TVTrailerVoteFactory.application(_:, didFinishLaunchingWithOptions:)` prior to calling the `[TVTrailerVoteFactory sharedFactory]`/`TVTrailerVoteFactory.shared()`.
+
 ## Enabling and configuring the TrailerVote In-Theatre feature
+
+> Working with the trailer recognition view controller
 
 ```objective_c
 @interface ViewController : UIViewController <TVAudioRecognitionViewControllerNewDelegate>
@@ -169,6 +197,8 @@ After the user votes, the feedback is recorded internally in the SDK and transmi
 
 *Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the "Put your phones away" view.*
 
+> Overriding the logo image used in the SDK
+
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -195,6 +225,8 @@ The SDK provides the ability to set the logo image displayed on the initial movi
 
 Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the **TrailerVote Video Player**. The TrailerVote Video Player will provide a prompt for voting during the video playback. 
 
+> Launching the video player
+
 ```objective_c
 @interface ViewController : UIViewController
 @end
@@ -219,6 +251,8 @@ To present the video player, call the `[[TVTrailerVoteFactory sharedFactory] pre
 ## Integrating the Movies carousel view
 
 <img src="img_movies_carousel.png" />
+
+> Embedding the Movies carousel view
 
 ```objective_c
 @interface ViewController : UIViewController
@@ -254,6 +288,8 @@ The SDK provies the ready for use movies carousel view that can be easily integr
 ## Integrating the Voted movies feed view
 
 <img src="img_voted_movies_feed.png" />
+
+> Embedding the Voted movies feed view
 
 ```objective_c
 @interface ViewController : UIViewController
@@ -292,6 +328,8 @@ The view incapsulates the necessary logic for fetching the voted movies list, pr
 
 ## Enabling the Analytics and the Remote Notifications capabilities
 
+> Setting up the analytics token
+
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -312,9 +350,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the `[TVTrailerVoteFactory setupAnalyticsToken:]`/`TVTrailerVoteFactory.setupAnalyticsToken(_:)` method. The key events will be sent automatically by the SDK.
 
-<br />
-<br />
-<br />
+> Setting up the remote notifications capability
 
 ```objective_c
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -336,6 +372,8 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 ```
 
 For enabling the remote notifications capability, start by calling the `[[TVTrailerVoteFactory sharedFactory] enablePushNotificationsWithDeviceID:]`/`TVTrailerVoteFactory.shared().enablePushNotifications(withDeviceID:)` method. The `deviceID` parameter is the hexadecimal string retrieved from the device token provided by the iOS in your application's delegate class `-application:didRegisterForRemoteNotificationsWithDeviceToken:`/ `application(_:didRegisterForRemoteNotificationsWithDeviceToken:)` method.
+
+> Forwarding the received remote notification payload to the SDK
 
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -376,9 +414,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 
 Upon receiving the remote notification's payload dictionary in `-application:didReceiveRemoteNotification:fetchCompletionHandler:`/`application(_:didReceiveRemoteNotification:completionHandler:)` or `-application:didFinishLaunchingWithOptions:`/`application(_:didFinishLaunchingWithOptions:)` method, call the `[[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:]`/`TVTrailerVoteFactory.shared().TVTrailerVoteFactory.shared().processPushNotificationPayload(_:)` method in order for the SDK to process and react accordingly to the notification's payload data.
 
-<br />
-<br />
-<br />
+> Handling the delegate methods of the remote notifications capability
 
 ```objective_c
 @interface AppDelegate : UIResponder <UIApplicationDelegate, TVRemoteNotificationsDelegate>
@@ -424,6 +460,6 @@ In some time later, when you wish to stop the remote notifications capability, c
 To track analytics events, the SDK provides several methods:
 
 - `-(void)logShowtimesPageShownEventWithIdentifier:(nonnull NSString *)movieIdentifier;`
-- `-(void)logTicketPurchasedEventWithIdentifier:(nonnull NSString *)movieIdentifier quantity:(NSUInteger)quantity value:(double)totalPrice fees:(double)convenienceFees currency:(nonnull NSString *)currencyCode;`
+- `- (void)logTicketPurchasedEventWithMovieID:(nonnull NSString *)movieID showtimeDate:(nonnull NSDate *)showtimeDate ticketCount:(NSUInteger)ticketCount totalPrice:(double)totalPrice;`
 
 Call these methods in corresponding places in your app to submit the corresponding events.
