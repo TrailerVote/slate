@@ -4,6 +4,7 @@ title: TrailerVote Documentation
 language_tabs: # must be one of https://git.io/vQNgJ
   - objective_c
   - swift
+  - java
 
 toc_footers:
   - © TrailerVote. CONFIDENTIAL.
