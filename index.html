@@ -235,15 +235,47 @@
                     <a href="#getting-started" class="toc-h2 toc-link" data-title="Getting Started">Getting Started</a>
                   </li>
                   <li>
-                    <a href="#in-theatre-voting-experience" class="toc-h2 toc-link" data-title="In-Theatre Voting Experience">In-Theatre Voting Experience</a>
+                    <a href="#configuring-and-initializing-the-trailervote-sdk" class="toc-h2 toc-link" data-title="Configuring and initializing the TrailerVote SDK">Configuring and initializing the TrailerVote SDK</a>
                   </li>
                   <li>
-                    <a href="#displaying-the-watchlist" class="toc-h2 toc-link" data-title="Displaying the Watchlist">Displaying the Watchlist</a>
+                    <a href="#enabling-and-configuring-the-trailervote-in-theatre-feature" class="toc-h2 toc-link" data-title="Enabling and configuring the TrailerVote In-Theatre feature">Enabling and configuring the TrailerVote In-Theatre feature</a>
+                  </li>
+                  <li>
+                    <a href="#presenting-the-trailervote-video-player" class="toc-h2 toc-link" data-title="Presenting the TrailerVote Video Player">Presenting the TrailerVote Video Player</a>
+                  </li>
+                  <li>
+                    <a href="#integrating-the-movies-carousel-view" class="toc-h2 toc-link" data-title="Integrating the Movies carousel view">Integrating the Movies carousel view</a>
+                  </li>
+                  <li>
+                    <a href="#integrating-the-voted-movies-feed-view" class="toc-h2 toc-link" data-title="Integrating the Voted movies feed view">Integrating the Voted movies feed view</a>
+                  </li>
+                  <li>
+                    <a href="#enabling-the-analytics-and-the-remote-notifications-capabilities" class="toc-h2 toc-link" data-title="Enabling the Analytics and the Remote Notifications capabilities">Enabling the Analytics and the Remote Notifications capabilities</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#additional-notes" class="toc-h1 toc-link" data-title="Additional Notes">Additional Notes</a>
+            <a href="#android" class="toc-h1 toc-link" data-title="Android">Android</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#installation-2" class="toc-h2 toc-link" data-title="Installation">Installation</a>
+                  </li>
+                  <li>
+                    <a href="#getting-started-2" class="toc-h2 toc-link" data-title="Getting Started">Getting Started</a>
+                  </li>
+                  <li>
+                    <a href="#configuring-and-initializing-the-trailervote-sdk-2" class="toc-h2 toc-link" data-title="Configuring and initializing the TrailerVote SDK">Configuring and initializing the TrailerVote SDK</a>
+                  </li>
+                  <li>
+                    <a href="#enabling-the-trailervote-in-theatre-feature" class="toc-h2 toc-link" data-title="Enabling the TrailerVote In-Theatre feature">Enabling the TrailerVote In-Theatre feature</a>
+                  </li>
+                  <li>
+                    <a href="#enabling-the-trailervote-video-player" class="toc-h2 toc-link" data-title="Enabling the TrailerVote Video Player">Enabling the TrailerVote Video Player</a>
+                  </li>
+                  <li>
+                    <a href="#enabling-the-analytics-and-the-remote-notifications-capabilities-2" class="toc-h2 toc-link" data-title="Enabling the Analytics and the Remote Notifications capabilities.">Enabling the Analytics and the Remote Notifications capabilities.</a>
+                  </li>
+              </ul>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -276,172 +308,506 @@
 <ol>
 <li>Contact TrailerVote for the the latest iOS SDK.</li>
 <li>Drag TrailerVoteSDK.framework into your Xcode project tree:
-<img src="images/img_framework_in_project_tree.png" title="TrailerVote Framework in Xcode Project" alt="alt text" /></li>
+<img src="images/img_framework_in_project_tree.png" title="TrailerVote Framework in Xcode Project" alt="TrailerVote framework included into project" /></li>
 <li>In your app Target Settings -&gt; General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
+<img src="images/img_framework_embedding.png" title="TrailerVote Embedding" alt="TrailerVote added to Embedded Binaries" />
+=======</li>
+<li>Drag <strong>TrailerVoteSDK.framework</strong> into your Xcode project tree:
+<img src="images/img_framework_in_project_tree.png" title="TrailerVote Framework in Xcode Project" alt="alt text" /></li>
+<li>In your app <strong>Target Settings</strong> -&gt; <strong>General</strong> tab, under the <strong>Embedded Binaries</strong> section, click the <strong>+</strong> button and select the imported <strong>TrailerVoteSDK.framework</strong> item. Click the <strong>Add</strong> button.
 <img src="images/img_framework_embedding.png" title="TrailerVote Embedding" alt="alt text" /></li>
 </ol>
-<h2 id='getting-started'>Getting Started</h2><pre class="highlight swift tab-swift"><code><span class="kd">import</span> <span class="kt">TrailerVoteSDK</span>
+<h2 id='getting-started'>Getting Started</h2>
+<blockquote>
+<p>Importing the SDK</p>
+</blockquote>
+<pre class="highlight swift tab-swift"><code><span class="kd">import</span> <span class="kt">TrailerVoteSDK</span>
 </code></pre><pre class="highlight objective_c tab-objective_c"><code><span class="cp">#import &lt;TrailerVoteSDK/TrailerVoteSDK.h&gt;
 </span></code></pre>
-<p>The TrailerVote SDK has to be imported before it can be used.</p>
+<p>Import the SDK to use the public interface and call methods.</p>
 
-<p></br>
-</br></p>
-<pre class="highlight swift tab-swift"><code><span class="kd">@UIApplicationMain</span>
-<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplication</span><span class="o">.</span><span class="kt">LaunchOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+<blockquote>
+<p>Accessing the SDK&#39;s factory class singleton instance</p>
+</blockquote>
+<pre class="highlight swift tab-swift"><code><span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">methodName</span><span class="p">()</span>
+</code></pre><pre class="highlight objective_c tab-objective_c"><code><span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">methodName</span><span class="p">];</span>
+</code></pre>
+<p>TrailerVote SDK provides the main factory class <code>TVTrailerVoteFactory</code>, containing various methods for adding the TrailerVote experience to your app.</p>
 
-        <span class="c1">// setup the SDK credentials</span>
-        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span> <span class="s">"ReplaceThisWithAKeyWeProvide"</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="s">"ReplaceThisWithAPasswordWeProvide"</span><span class="p">)</span>
+<p>Simply call the <code>[TVTrailerVoteFactory sharedFactory]</code>/<code>TVTrailerVoteFactory.shared()</code> class method to access the singleton instance.</p>
+<h2 id='configuring-and-initializing-the-trailervote-sdk'>Configuring and initializing the TrailerVote SDK</h2>
+<blockquote>
+<p>Setting up the credentials</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<p>In order to use the SDK, you are required to provide the set of credentials (username/password). This can be done by calling the <code>[TVTrailerVoteFactory setupCredentialsWithUsername:password:]</code>/<code>TVTrailerVoteFactory.setupCredentials(withUsername:password:)</code> method.</p>
 
-        <span class="c1">// launch the trailer recognition feature data preload</span>
-        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+<p>Please note that the invocation of this method should precede any other calls on the SDK factory class, otherwise an exception will be thrown indicating the absence of credentials.</p>
 
-        <span class="c1">// override the default partner logo image</span>
-        <span class="k">let</span> <span class="nv">partnerLogoImage</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"logo"</span><span class="p">)</span>
-        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">setPartnerLogoImage</span><span class="p">(</span><span class="n">partnerLogoImage</span><span class="p">)</span>
+<p>The initialization process of the SDK begins immediately upon the first invocation of <code>[TVTrailerVoteFactory sharedFactory]</code>/<code>TVTrailerVoteFactory.shared()</code> method. All internal dependencies and SDK resources are initialized automatically.</p>
 
-        <span class="c1">// process a remote notifications payload, if the app was launched by tapping the notification</span>
-        <span class="k">if</span> <span class="k">let</span> <span class="nv">remoteNotificationPayload</span> <span class="o">=</span> <span class="n">launchOptions</span><span class="p">?[</span><span class="o">.</span><span class="n">remoteNotification</span><span class="p">]</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="p">{</span>
-            <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">processPushNotificationPayload</span><span class="p">(</span><span class="n">remoteNotificationPayload</span><span class="p">)</span>
-        <span class="p">}</span>
+<p>In order for the <strong>TrailerVote In-Theatre feature</strong> to work offline, the movie trailers recognition data needs to be downloaded from the network.</p>
 
-        <span class="k">return</span> <span class="kc">true</span>
+<blockquote>
+<p>Launching trailer recognition feature data pre-loading process</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<p>To start the pre-loading process of the trailer recognition data, call the <code>[[TVTrailerVoteFactory sharedFactory] launchDataPreload]</code>/<code>TVTrailerVoteFactory.shared().launchDataPreload()</code> method.</p>
 
+<p>Once the data is downloaded, the trailer recognition feature will be available in offline, but please keep the data pre-load call triggered on your app launch so that the SDK could update the recognition data.</p>
+
+<blockquote>
+<p>Forwarding the did finish launching method parameters to the SDK</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">application</span><span class="p">:</span><span class="n">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:</span><span class="n">launchOptions</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">application</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="nv">didFinishLaunchingWithOptions</span><span class="p">:</span> <span class="n">launchOptions</span> <span class="p">??</span> <span class="p">[:])</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<p>In order for the SDK to infer the application launch method (either by clicking the remote notification, opening a deep link or a manual launch), call the <code>[TVTrailerVoteFactory application:didFinishLaunchingWithOptions:]</code>/<code>TVTrailerVoteFactory.application(_:, didFinishLaunchingWithOptions:)</code> prior to calling the <code>[TVTrailerVoteFactory sharedFactory]</code>/<code>TVTrailerVoteFactory.shared()</code>.</p>
+<h2 id='enabling-and-configuring-the-trailervote-in-theatre-feature'>Enabling and configuring the TrailerVote In-Theatre feature</h2>
+<blockquote>
+<p>Working with the trailer recognition view controller</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span> <span class="o">&lt;</span><span class="n">TVAudioRecognitionViewControllerNewDelegate</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">launchTrailerRecognition</span>
+<span class="p">{</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">presentTrailerRecognitionViewController</span><span class="p">:</span><span class="n">self</span> <span class="nf">recognitionDelegate</span><span class="p">:</span><span class="n">self</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span>                <span class="n">audioRecognitionViewController</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">viewController</span>
+<span class="n">userDidTapOnFacebookLoginButtonWithSubscriptionEnabled</span><span class="o">:</span><span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">subscriptionEnabled</span>
+                                    <span class="n">hostViewController</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">__kindof</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">hostViewController</span>
+<span class="p">{</span>
+    <span class="c1">//proceed with login
+</span><span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span>               <span class="n">audioRecognitionViewController</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">viewController</span>
+<span class="n">userDidTapOnTwitterLoginButtonWithSubscriptionEnabled</span><span class="o">:</span><span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">subscriptionEnabled</span>
+                                   <span class="n">hostViewController</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">__kindof</span> <span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">hostViewController</span>
+<span class="p">{</span>
+    <span class="c1">//proceed with login
+</span><span class="p">}</span>
+<span class="k">@end</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">TVAudioRecognitionViewControllerNewDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">launchTrailerRecognition</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">presentTrailerRecognitionViewController</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">recognitionDelegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
     <span class="p">}</span>
-</code></pre><pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">:</span> <span class="nc">UIResponder</span> <span class="o">&lt;</span><span class="n">UIApplicationDelegate</span><span class="o">&gt;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">UIWindow</span> <span class="o">*</span> <span class="n">window</span><span class="p">;</span>
+
+    <span class="kd">func</span> <span class="nf">audioRecognitionViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span>
+                                        <span class="n">userDidTapOnFacebookLoginButtonWithSubscriptionEnabled</span> <span class="nv">subscriptionEnabled</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                                        <span class="nv">hostViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//proceed with login</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">audioRecognitionViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span>
+                                        <span class="n">userDidTapOnTwitterLoginButtonWithSubscriptionEnabled</span> <span class="nv">subscriptionEnabled</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                                        <span class="nv">hostViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//proceed with login</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>The main feature of the SDK is the movie trailers recognition. To present the full-screen UI of the feature, call the <code>[[TVTrailerVoteFactory sharedFactory] presentTrailerRecognitionViewController:recognitionDelegate:]</code>/<code>TVTrailerVoteFactory.shared().presentTrailerRecognitionViewController(_:recognitionDelegate:)</code> method.</p>
+
+<p><img src="img_recognition_screen.png" /></p>
+
+<p>When the movie trailer is recognized, the voting buttons are shown with the prompt for the user to vote.</p>
+
+<p><img src="img_recognition_screen_voting.png" /></p>
+
+<p>After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.</p>
+
+<p><em>Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the &quot;Put your phones away&quot; view.</em></p>
+
+<blockquote>
+<p>Overriding the logo image used in the SDK</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">setPartnerLogoImage</span><span class="p">:</span><span class="o">&lt;</span><span class="n">YOUR_IMAGE</span><span class="o">&gt;</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">setPartnerLogoImage</span><span class="p">(</span><span class="o">&lt;</span><span class="kt">YOUR_IMAGE</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<p>The SDK provides the ability to set the logo image displayed on the initial movie card. Call the <code>[[TVTrailerVoteFactory sharedFactory] setPartnerLogoImage:]</code>/<code>TVTrailerVoteFactory.shared().setPartnerLogoImage(_:)</code> method providing your own logo image to use.</p>
+<h2 id='presenting-the-trailervote-video-player'>Presenting the TrailerVote Video Player</h2>
+<p><img src="img_video_player.png" /></p>
+
+<p>Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the <strong>TrailerVote Video Player</strong>. The TrailerVote Video Player will provide a prompt for voting during the video playback. </p>
+
+<blockquote>
+<p>Launching the video player</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">launchVideoPlayer</span>
+<span class="p">{</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">presentVideoPlayerViewController</span><span class="p">:</span><span class="n">self</span> <span class="nf">movieTrailerURL</span><span class="p">:</span><span class="o">&lt;</span><span class="n">MOVIE_TRAILER_URL</span><span class="o">&gt;</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">launchVideoPlayer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">presentVideoPlayerViewController</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">movieTrailerURL</span><span class="p">:</span> <span class="o">&lt;</span><span class="kt">MOVIE_TRAILER_URL</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>To present the video player, call the <code>[[TVTrailerVoteFactory sharedFactory] presentVideoPlayerViewController:movieTrailerURL:]</code>/<code>TVTrailerVoteFactory.shared().presentVideoPlayerViewController(_:, movieTrailerURL:)</code> method. The video player will automatically manage the playback queue and present the voting UI in order for user to vote on shown movies.</p>
+<h2 id='integrating-the-movies-carousel-view'>Integrating the Movies carousel view</h2>
+<p><img src="img_movies_carousel.png" /></p>
+
+<blockquote>
+<p>Embedding the Movies carousel view</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIView</span> <span class="o">*</span> <span class="n">movieCarouselContainerView</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+<span class="p">{</span>
+    <span class="n">TVProductCarouselViewController</span> <span class="o">*</span> <span class="n">_productCarouselVC</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    <span class="n">_productCarouselVC</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">productCarouselViewControllerEmbeddedInParentViewController</span><span class="p">:</span><span class="n">self</span> <span class="nf">parentView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">movieCarouselContainerView</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">movieCarouselContainerView</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">!</span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">productCarouselVC</span><span class="p">:</span> <span class="kt">TVProductCarouselViewController</span><span class="o">!</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="n">productCarouselVC</span> <span class="o">=</span> <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">productCarouselViewControllerEmbedded</span><span class="p">(</span><span class="nv">inParentViewController</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">parentView</span><span class="p">:</span> <span class="n">movieCarouselContainerView</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>The SDK provies the ready for use movies carousel view that can be easily integrated into your UI by using the <code>[[TVTrailerVoteFactory sharedFactory] productCarouselViewControllerEmbeddedInParentViewController:parentView:]</code>/<code>TVTrailerVoteFactory.shared().productCarouselViewControllerEmbedded(inParentViewController:parentView:)</code> method. The view incapsules the necessary logic for fetching the movies list, presenting the data for each movie as well as launching the <strong>TrailerVote Video Player</strong> upon the selection of the particular item in the feed.</p>
+<h2 id='integrating-the-voted-movies-feed-view'>Integrating the Voted movies feed view</h2>
+<p><img src="img_voted_movies_feed.png" /></p>
+
+<blockquote>
+<p>Embedding the Voted movies feed view</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">:</span> <span class="nc">UIViewController</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIView</span> <span class="o">*</span> <span class="n">votedMoviesFeedContainerView</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+<span class="p">{</span>
+    <span class="n">TVVotedTrailersFeedViewController</span> <span class="o">*</span> <span class="n">_votedTrailersFeedVC</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    <span class="n">_votedTrailersFeedVC</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">votedTrailersFeedViewControllerEmbeddedInParentViewController</span><span class="p">:</span><span class="n">self</span> <span class="nf">parentView</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">votedMoviesFeedContainerView</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">votedMoviesFeedContainerView</span><span class="p">:</span> <span class="kt">UIView</span><span class="o">!</span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">votedTrailersFeedVC</span><span class="p">:</span> <span class="kt">TVVotedTrailersFeedViewController</span><span class="o">!</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="n">votedTrailersFeedVC</span> <span class="o">=</span> <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">votedTrailersFeedViewControllerEmbedded</span><span class="p">(</span><span class="nv">inParentViewController</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">parentView</span><span class="p">:</span> <span class="n">votedTrailersFeedContainerView</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>The SDK also provides the voted movies feed view for presenting the list of movies the user has previously voted on. To embed the view into your UI, call the <code>[[TVTrailerVoteFactory sharedFactory] votedTrailerFeedViewControllerEmbeddedInParentViewController:parentView:]</code>/<code>TVTrailerVoteFactory.shared().votedTrailerFeedViewControllerEmbedded(inParentViewController:parentView:)</code> method.</p>
+
+<p><img src="img_voted_movies_feed_filter.png" /></p>
+
+<p>The view incapsulates the necessary logic for fetching the voted movies list, provides the capability of filtering the movies by the vote type (all, positive, neutral or negative), as well as launching the <strong>TrailerVote Video Player</strong> upon the selection of the particular item in the feed.</p>
+<h2 id='enabling-the-analytics-and-the-remote-notifications-capabilities'>Enabling the Analytics and the Remote Notifications capabilities</h2>
+<blockquote>
+<p>Setting up the analytics token</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupAnalyticsToken</span><span class="p">:</span><span class="s">@"YOUR_ANALYTICS_TOKEN"</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupAnalyticsToken</span><span class="p">(</span><span class="s">"YOUR_ANALYTICS_TOKEN"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+<p>=======
+Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the <code>[TVTrailerVoteFactory setupAnalyticsToken:]</code>/<code>TVTrailerVoteFactory.setupAnalyticsToken(_:)</code> method. The key events will be sent automatically by the SDK.</p>
+
+<blockquote>
+<p>Setting up the remote notifications capability</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didRegisterForRemoteNotificationsWithDeviceToken</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">deviceToken</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">deviceToken</span> <span class="nf">bytes</span><span class="p">];</span>
+    <span class="n">NSMutableString</span> <span class="o">*</span><span class="n">token</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableString</span> <span class="nf">string</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">NSUInteger</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">[</span><span class="n">deviceToken</span> <span class="nf">length</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">token</span> <span class="nf">appendFormat</span><span class="p">:</span><span class="s">@"%02.2hhX"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="nf">i</span><span class="p">]];</span>
+    <span class="p">}</span>
+    <span class="n">NSString</span> <span class="o">*</span> <span class="n">tokenString</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="nf">copy</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">enablePushNotificationsWithDeviceID</span><span class="p">:</span><span class="n">tokenString</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">enablePushNotifications</span><span class="p">(</span><span class="nv">withDeviceID</span><span class="p">:</span> <span class="n">deviceToken</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="kt">String</span><span class="p">(</span><span class="nv">format</span><span class="p">:</span> <span class="s">"%02.2hhx"</span><span class="p">,</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="nf">joined</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre>
+<p>For enabling the remote notifications capability, start by calling the <code>[[TVTrailerVoteFactory sharedFactory] enablePushNotificationsWithDeviceID:]</code>/<code>TVTrailerVoteFactory.shared().enablePushNotifications(withDeviceID:)</code> method. The <code>deviceID</code> parameter is the hexadecimal string retrieved from the device token provided by the iOS in your application&#39;s delegate class <code>-application:didRegisterForRemoteNotificationsWithDeviceToken:</code>/ <code>application(_:didRegisterForRemoteNotificationsWithDeviceToken:)</code> method.</p>
+
+<blockquote>
+<p>Forwarding the received remote notification payload to the SDK</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupAnalyticsToken</span><span class="p">:</span><span class="s">@"YOUR_ANALYTICS_TOKEN"</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="n">id</span> <span class="n">remoteNotificationPayload</span> <span class="o">=</span> <span class="p">[</span><span class="n">launchOptions</span> <span class="nf">objectForKey</span><span class="p">:</span><span class="n">UIApplicationLaunchOptionsRemoteNotificationKey</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">remoteNotificationPayload</span> <span class="o">&amp;&amp;</span> <span class="p">[</span><span class="n">remoteNotificationPayload</span> <span class="nf">isKindOfClass</span><span class="p">:</span><span class="n">NSDictionary</span><span class="p">.</span><span class="n">class</span><span class="p">])</span>
+    <span class="p">{</span>
+        <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">processPushNotificationPayload</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">remoteNotificationPayload</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didReceiveRemoteNotification</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">userInfo</span> <span class="nf">fetchCompletionHandler</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span><span class="p">))</span><span class="nv">completionHandler</span>
+<span class="p">{</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">processPushNotificationPayload</span><span class="p">:</span><span class="n">userInfo</span><span class="p">];</span>
+    <span class="n">completionHandler</span><span class="p">(</span><span class="n">UIBackgroundFetchResultNoData</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupAnalyticsToken</span><span class="p">(</span><span class="s">"YOUR_ANALYTICS_TOKEN"</span><span class="p">)</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">remoteNotificationPayload</span> <span class="o">=</span> <span class="n">launchOptions</span><span class="p">?[</span><span class="o">.</span><span class="n">remoteNotification</span><span class="p">]</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">AnyHashable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="p">{</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">processPushNotificationPayload</span><span class="p">(</span><span class="n">remoteNotificationPayload</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didReceiveRemoteNotification</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">],</span> <span class="n">fetchCompletionHandler</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">UIBackgroundFetchResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">processPushNotificationPayload</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
+    <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="n">noData</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+<p>Upon receiving the remote notification&#39;s payload dictionary in <code>-application:didReceiveRemoteNotification:fetchCompletionHandler:</code>/<code>application(_:didReceiveRemoteNotification:completionHandler:)</code> or <code>-application:didFinishLaunchingWithOptions:</code>/<code>application(_:didFinishLaunchingWithOptions:)</code> method, call the <code>[[TVTrailerVoteFactory sharedFactory] processPushNotificationPayload:]</code>/<code>TVTrailerVoteFactory.shared().TVTrailerVoteFactory.shared().processPushNotificationPayload(_:)</code> method in order for the SDK to process and react accordingly to the notification&#39;s payload data.</p>
+
+<blockquote>
+<p>Handling the delegate methods of the remote notifications capability</p>
+</blockquote>
+<pre class="highlight objective_c tab-objective_c"><code><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">:</span> <span class="nc">UIResponder</span> <span class="o">&lt;</span><span class="n">UIApplicationDelegate</span><span class="p">,</span> <span class="n">TVRemoteNotificationsDelegate</span><span class="o">&gt;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">UIWindow</span> <span class="o">*</span><span class="n">window</span><span class="p">;</span>
 <span class="k">@end</span>
 
 <span class="k">@implementation</span> <span class="nc">AppDelegate</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> 
 <span class="p">{</span>
-    <span class="c1">// setup the SDK credentials
-</span>    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"ReplaceThisWithAKeyWeProvide"</span> <span class="nf">password</span><span class="p">:</span><span class="s">@"ReplaceThisWithAPasswordWeProvide"</span><span class="p">];</span>
-
-    <span class="c1">// launch the trailer recognition feature data preload
-</span>    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
-
-    <span class="c1">// override the default partner logo image
-</span>    <span class="n">UIImage</span> <span class="o">*</span> <span class="n">partnerLogoImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="nf">imageNamed</span><span class="p">:</span><span class="s">@"logo"</span><span class="p">];</span>
-    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">setPartnerLogoImage</span><span class="p">:</span><span class="n">partnerLogoImage</span><span class="p">];</span>
-
-    <span class="c1">// process a remote notifications payload, if the app was launched by tapping the notification
-</span>    <span class="k">if</span> <span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="nf">UIApplicationLaunchOptionsRemoteNotificationKey</span><span class="p">])</span> <span class="p">{</span>
-        <span class="n">NSDictionary</span> <span class="o">*</span> <span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">options</span><span class="p">[</span><span class="nf">UIApplicationLaunchOptionsRemoteNotificationKey</span><span class="p">];</span>
-        <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">processPushNotificationPayload</span><span class="p">:</span><span class="n">payload</span><span class="p">];</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-<p>The <code>setupCredentials</code>, <code>launchDataPreload</code>, <code>setPartnerLogoImage</code>, and <code>processPushNotificationPayload</code> functions can be included in the <code>didFinishLaunchingWithOptions</code> function.</p>
-
-<p></br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br></p>
-<pre class="highlight swift tab-swift"><code>    <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didRegisterForRemoteNotificationsWithDeviceToken</span> <span class="nv">deviceToken</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="p">{</span>
-
-        <span class="c1">// enable the remote notifications feature once the device token is received</span>
-        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">enablePushNotifications</span><span class="p">(</span><span class="nv">withDeviceID</span><span class="p">:</span> <span class="n">deviceToken</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="kt">String</span><span class="p">(</span><span class="nv">format</span><span class="p">:</span> <span class="s">"%02.2hhx"</span><span class="p">,</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="nf">joined</span><span class="p">())</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didReceiveRemoteNotification</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">],</span> <span class="n">fetchCompletionHandler</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">UIBackgroundFetchResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-
-        <span class="c1">// get the SDK to process received remote notification payload</span>
-        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">processPushNotificationPayload</span><span class="p">(</span><span class="n">userInfo</span><span class="p">)</span>
-
-        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="n">noData</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre><pre class="highlight objective_c tab-objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didRegisterForRemoteNotificationsWithDeviceToken</span><span class="p">:(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="nv">devToken</span> <span class="p">{</span>
-    <span class="k">const</span> <span class="kt">unsigned</span> <span class="o">*</span> <span class="n">tokenBytes</span> <span class="o">=</span> <span class="p">[</span><span class="n">devToken</span> <span class="nf">bytes</span><span class="p">];</span>
-    <span class="n">NSString</span> <span class="o">*</span> <span class="n">hexToken</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"%08x%08x%08x%08x%08x%08x%08x%08x"</span><span class="p">,</span>
-                         <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-                         <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span>
-                         <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">tokenBytes</span><span class="p">[</span><span class="mi">7</span><span class="p">])];</span>
-
-     <span class="c1">// enable the remote notifications feature once the device token is received
-</span>     <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">enablePushNotificationsWithDeviceID</span><span class="p">:</span><span class="n">hexToken</span><span class="p">];</span>   
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupCredentialsWithUsername</span><span class="p">:</span><span class="s">@"YOUR_USERNAME"</span><span class="nf">password</span><span class="p">:</span><span class="s">@"YOUR_PASSWORD"</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">setupAnalyticsToken</span><span class="p">:</span><span class="s">@"YOUR_ANALYTICS_TOKEN"</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">launchDataPreload</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">].</span><span class="n">remoteNotificationsDelegate</span> <span class="o">=</span> <span class="n">self</span><span class="err">;</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="err">;</span>
 <span class="p">}</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didReceiveRemoteNotification</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">userInfo</span> <span class="nf">fetchCompletionHandler</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span> <span class="n">result</span><span class="p">))</span><span class="nv">completionHandler</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">openShowtimesForMovieID</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">movieID</span>
 <span class="p">{</span>
-    <span class="c1">// get the SDK to process received remote notification
-</span>    <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">processPushNotificationPayload</span><span class="p">:</span><span class="n">userInfo</span><span class="p">];</span>
-<span class="p">}</span>
-
+    <span class="c1">// navigate to the corresponding movie showtimes screen
+</span><span class="p">}</span>
 <span class="k">@end</span>
-</code></pre>
-<p>In order to receive the notifications from TrailerVote, you have to enable notifications.
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br></p>
-<pre class="highlight swift tab-swift"><code><span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">logEvent</span><span class="p">(</span><span class="s">"ticket-purchased"</span><span class="p">,</span> <span class="nv">identifier</span><span class="p">:</span> <span class="s">"your-movie-identifier"</span><span class="p">,</span> <span class="nv">quantity</span><span class="p">:</span> <span class="s">"number-of-tickets"</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="s">"sum-of-ticket-prices"</span><span class="p">,</span> <span class="nv">fees</span><span class="p">:</span><span class="s">"convenience-fees-charged"</span><span class="p">,</span> <span class="nv">currency</span><span class="p">:</span><span class="s">"three-letter-currency-code"</span><span class="p">)</span>
-</code></pre><pre class="highlight objective_c tab-objective_c"><code><span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">logEvent</span><span class="p">:</span><span class="s">@"ticket-purchased"</span> <span class="nf">identifier</span><span class="p">:</span><span class="s">@"your-cinema-identifier"</span> <span class="n">quantity</span><span class="o">:</span><span class="s">@"number-of-tickets"</span> <span class="n">value</span><span class="o">:</span><span class="s">@"sum-of-ticket-prices"</span> <span class="n">fees</span><span class="o">:</span><span class="s">"convenience-fees-charged"</span> <span class="n">currency</span><span class="o">:</span><span class="s">@"three-letter-currency-code"</span><span class="p">];</span>
-</code></pre>
-<p>To determine the effectiveness of notifications and reminders, use the <code>logEvent</code> method to report the completion of a transaction (in this case a ticket purchase) to TrailerVote. These results will be reflected in the client&#39;s analytics.</p>
-<h2 id='in-theatre-voting-experience'>In-Theatre Voting Experience</h2>
-<p>The main feature of the SDK is the movie trailers recognition. We use the TVAudioRecognitionViewController class for presenting a full-screen user interface and for handling the recognition processes.
-<img src="images/img_listening_screen.png" title="TrailerVote Listening Screen" alt="alt text" /></p>
-<pre class="highlight objective_c tab-objective_c"><code><span class="n">TVAudioRecognitionViewController</span> <span class="o">*</span> <span class="n">audioRecognitionVC</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">audioRecognitionViewController</span><span class="p">];</span>
-<span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">audioRecognitionVC</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
-</code></pre><pre class="highlight swift tab-swift"><code><span class="k">let</span> <span class="nv">audioRecognitionVC</span> <span class="o">=</span> <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">audioRecognitionViewController</span><span class="p">()</span>
-<span class="nf">present</span><span class="p">(</span><span class="n">audioRecognitionVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-</code></pre>
-<p>Instantiate the view controller by calling the <code>[TVTrailerVoteFactory audioRecognitionViewController]</code> method of the main factory class:
-After creating an instance, the audio recognition view controller can be easily presented using UIKit present(_:animated:completion:) method:</p>
+</code></pre><pre class="highlight swift tab-swift"><code><span class="kd">@UIApplicationMain</span>
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span><span class="p">,</span> <span class="kt">TVRemoteNotificationsDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupCredentials</span><span class="p">(</span><span class="nv">withUsername</span><span class="p">:</span><span class="s">"YOUR_USERNAME"</span> <span class="nv">password</span><span class="p">:</span><span class="s">"YOUR_PASSWORD"</span><span class="p">)</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">setupAnalyticsToken</span><span class="p">(</span><span class="s">"YOUR_ANALYTICS_TOKEN"</span><span class="p">)</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">launchDataPreload</span><span class="p">()</span>
+        <span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="n">remoteNotificationsDelegate</span> <span class="o">=</span> <span class="k">self</span>
+    <span class="p">}</span>
 
-<p>When the movie trailer is recognized, the voting buttons are shown with the prompt for the user to vote.
-<img src="images/recognized_avengers.png" title="TrailerVote Listening Screen" alt="alt text" />
-After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.</p>
-
-<p>Note: Special advertisement clips, such as ad banners or special action triggers are handled differently - the fullscreen web view is presented with the corresponding url being loaded or some other UI elements are presented, such as the “Put your phones away” view.</p>
-<h2 id='displaying-the-watchlist'>Displaying the Watchlist</h2>
-<p><img src="images/img_voted_movies_feed.png" title="TrailerVote Watchlist" alt="alt text" /></p>
-
-<blockquote>
-<p>To embed the view into your UI, call the </p>
-</blockquote>
-<pre class="highlight objective_c tab-objective_c"><code><span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">votedTrailersFeedViewControllerEmbeddedInParentViewController</span><span class="p">:</span><span class="nf">parentView</span><span class="p">:]</span>
-
-</code></pre><pre class="highlight swift tab-swift"><code><span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">votedTrailersFeedViewControllerEmbedded</span><span class="p">(</span><span class="nv">inParentViewController</span><span class="p">:</span><span class="nv">parentView</span><span class="p">:)</span>
-</code></pre><h1 id='additional-notes'>Additional Notes</h1><pre class="highlight objective_c tab-objective_c"><code><span class="p">[[</span><span class="n">TVTrailerVoteFactory</span> <span class="nf">sharedFactory</span><span class="p">]</span> <span class="nf">disablePushNotifications</span><span class="p">]</span> 
-</code></pre><pre class="highlight swift tab-swift"><code><span class="kt">TVTrailerVoteFactory</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">disablePushNotifications</span><span class="p">()</span>
+    <span class="kd">func</span> <span class="nf">openShowtimes</span><span class="p">(</span><span class="n">forMovieID</span> <span class="nv">movieID</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// navigate to the corresponding movie showtimes screen</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
-<p>In some time later, when you wish to stop the remote notifications capability, call the method to remove the current device from the notifications recipients list.</p>
+<p>In order to communicate back to your app after processing the notification&#39;s payload, the SDK provides the <code>TVRemoteNotificationsDelegate</code> protocol. Implement this protocol in your app&#39;s delegate class and set the <code>delegate</code> property of SDK&#39;s factory class to react to the payload processing results.</p>
+
+<p>In some time later, when you wish to stop the remote notifications capability, call the <code>[[TVTrailerVoteFactory sharedFactory] disablePushNotifications]</code>/<code>TVTrailerVoteFactory.shared().disablePushNotifications()</code> method to remove the current device ID from the notifications recipients list.</p>
+
+<p>To track analytics events, the SDK provides several methods:</p>
+
+<ul>
+<li><code>-(void)logShowtimesPageShownEventWithIdentifier:(nonnull NSString *)movieIdentifier;</code></li>
+<li><code>- (void)logTicketPurchasedEventWithMovieID:(nonnull NSString *)movieID showtimeDate:(nonnull NSDate *)showtimeDate ticketCount:(NSUInteger)ticketCount totalPrice:(double)totalPrice;</code></li>
+</ul>
+
+<p>Call these methods in corresponding places in your app to submit the corresponding events.</p>
+<h1 id='android'>Android</h1><h2 id='installation-2'>Installation</h2>
+<ol>
+<li>Contact TrailerVote for the the latest Android SDK.</li>
+<li>Copy <code>com</code> directory into your project libraries directory. Example: <code>YourAppDir/app/libs/</code>
+<img src="images/img_sdk_location.png" title="Android SDK location" alt="alt text" /></li>
+<li>In you project <code>gradle</code> file add libraries directory to repositories list.
+<code>java
+allprojects {
+repositories {
+    maven {
+        url &quot;libs&quot;
+    }
+}
+}
+</code></li>
+<li>In your app module <code>gradle</code> file add TrailerVote SDK dependency:
+<code>java
+dependencies {
+implementation &quot;com.trailervote:trailervotesdk:1.0.0@aar&quot;
+}
+</code></li>
+</ol>
+<h2 id='getting-started-2'>Getting Started</h2>
+<p>The TrailerVote SDK contains a main class (<a href="/android"><code>TrailerVoteSdk</code></a>) which contains all the methods necessary for adding the TrailerVote experience to your app.</p>
+
+<ol>
+<li>Configuring and initializing the <strong>TrailerVote SDK</strong></li>
+<li>Enabling and configuring the <strong>TrailerVote In-Theatre feature</strong></li>
+<li>Enabling the <strong>TrailerVote Video Player</strong></li>
+<li>Enabling the <strong>Analytics</strong> and <strong>Remote notifications</strong> capabilities</li>
+</ol>
+<h2 id='configuring-and-initializing-the-trailervote-sdk-2'>Configuring and initializing the TrailerVote SDK</h2>
+<p>The initialization process of the SDK begins immediately at the first call of <code>TrailerVoteSdk.init(context, backendEndpoint, username, password);</code>. All internal dependencies are initialized as well as public singleton instances.</p>
+
+<p>To start the pre-loading process of the trailer recognition data, call the <code>TrailerVoteSdk.instance().load();</code> method.</p>
+
+<p>Once the data is downloaded, the trailer recognition feature will be available in offline, but please keep the data pre-load call triggered on your app launch so that the SDK could update the recognition data.</p>
+<h2 id='enabling-the-trailervote-in-theatre-feature'>Enabling the TrailerVote In-Theatre feature</h2>
+<p>The main feature of the SDK is the audio recognition of movie trailers. We use the <code>TrailerVoteRecognitionActivity</code> for presenting a full-screen user interface and for handling the audio recognition process.</p>
+
+<p><img src="images/img_recognition_screen.jpg" title="TrailerVote Screenshot" alt="TrailerVote main listening screen" /></p>
+
+<p>Navigate to recognition screen by calling the -<code>TrailerVoteSdk.instance().openRecognitionScreen(Context)</code> method of the main SDK class:</p>
+<pre class="highlight java tab-java"><code><span class="kt">boolean</span> <span class="n">success</span> <span class="o">=</span> <span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">openRecognitionScreen</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(!</span><span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+  <span class="c1">// error</span>
+<span class="o">}</span>
+</code></pre>
+<p>Note that after a trailer is recognized the SDK will render the voting buttons automatically and prompt the user to vote.</p>
+
+<p><img src="images/img_recognition_screen_voting.jpg" title="TrailerVote Voting Prompt" alt="TrailerVote has detected a trailer and has presented a voting card" /></p>
+
+<p>After a user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.</p>
+
+<p><em>Note: Special advertisement clips are handled differently - the fullscreen <code>WebView</code> is presented with the corresponding url being loaded.</em></p>
+
+<p>The SDK provides the ways to set the logo image displayed at the trailer recognition screen. To set the logo image, add the drawable with the name <code>img_recognition_screen_partner_logo</code>.
+You can override the default voting card background as well by adding the drawable with the name <code>img_recognition_screen_partner_background</code>.</p>
+<h2 id='enabling-the-trailervote-video-player'>Enabling the TrailerVote Video Player</h2>
+<p><img src="images/android_img_player_screen.png" title="TrailerVote Video Player" alt="TrailerVote Voting buttons on Video Player" /></p>
+
+<p>Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the <strong>TrailerVote Video Player</strong>. The TrailerVote Video Player will provide a prompt during the video playback.</p>
+
+<p>To launch the video player, call the</p>
+<pre class="highlight java tab-java"><code><span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">openVideoPlayerWithMovieIDs</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">anArrayOfMovieIDs</span><span class="o">,</span> <span class="n">initialIndex</span><span class="o">);</span>
+</code></pre>
+<p>Given an array of movie ids, the video player will automatically manage the playback queue of trailers and by providing the initial index you can change the initial trailer to start playback with.</p>
+<h2 id='enabling-the-analytics-and-the-remote-notifications-capabilities-2'>Enabling the Analytics and the Remote Notifications capabilities.</h2>
+<p>Both the analytics and the remote notifications capanilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the <code>setRemoteAnalyticsToken(YOUR_ANALYTICS_TOKEN)</code> method. The key events will be sent automatically by the SDK.</p>
+<pre class="highlight java tab-java"><code><span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">setRemoteAnalyticsToken</span><span class="o">(</span><span class="n">YOUR_ANALYTICS_TOKEN</span><span class="o">);</span>
+</code></pre>
+<p>For enabling the remote notifications capability, start by calling <code>enablePushNotifications(deviceToken)</code> and <code>setClassForNotificationIntent(class)</code> methods.</p>
+<pre class="highlight java tab-java"><code><span class="n">FirebaseInstanceId</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">getInstanceId</span><span class="o">().</span><span class="na">addOnCompleteListener</span><span class="o">(</span><span class="k">new</span> <span class="n">OnCompleteListener</span><span class="o">&lt;</span><span class="n">InstanceIdResult</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onComplete</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Task</span><span class="o">&lt;</span><span class="n">InstanceIdResult</span><span class="o">&gt;</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">isSuccessful</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">enablePushNotifications</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">getResult</span><span class="o">().</span><span class="na">getToken</span><span class="o">());</span>
+            <span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">setClassForNotificationIntent</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+<p>When the notification is received, call the <code>onNotificationReceived(intentExtras, listener)</code> method. In order to communicate back to your app after processing the notification&#39;s extras, the SDK provides <code>NotificationActionListener</code> interface. Implement this interface to react to the notification processing result.</p>
+<pre class="highlight java tab-java"><code><span class="k">if</span> <span class="o">(</span><span class="n">intent</span><span class="o">.</span><span class="na">getAction</span><span class="o">()</span> <span class="o">==</span> <span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_MAIN</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">Bundle</span> <span class="n">extras</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getExtras</span><span class="o">();</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">extras</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="s">"trailervote_notification"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">TrailerVoteSdk</span><span class="o">.</span><span class="na">instance</span><span class="o">().</span><span class="na">onNotificationReceived</span><span class="o">(</span><span class="n">extras</span><span class="o">,</span> <span class="k">new</span> <span class="n">NotificationActionListener</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nd">@Override</span>
+      <span class="kt">void</span> <span class="nf">onNotificationAction</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">NotificationAction</span> <span class="n">action</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">movieId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">switch</span> <span class="o">(</span><span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">case</span> <span class="n">NotificationAction</span><span class="o">.</span><span class="na">OPEN_RECOGNITION</span><span class="o">:</span>
+
+            <span class="k">break</span><span class="o">;</span>
+          <span class="k">case</span> <span class="n">NotificationAction</span><span class="o">.</span><span class="na">OPEN_MOVIE_DETAILS</span><span class="o">:</span>
+
+            <span class="k">break</span><span class="o">;</span>
+          <span class="k">case</span> <span class="n">NotificationAction</span><span class="o">.</span><span class="na">OPEN_MOVIE_SHOWTIMES</span><span class="o">:</span>
+
+            <span class="k">break</span><span class="o">;</span>
+          <span class="k">case</span> <span class="k">default</span><span class="o">:</span>
+
+            <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">});</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+<p>In some time later, when you wish to stop the remote notifications capability, call the <code>disablePushNotifications</code> method to remove current device token from the notifications recipients list.</p>
+
+<p>To track analytics events, the SDK provides several methods:</p>
+
+<ul>
+<li><code>TrailerVoteSdk.instance().logTicketPurchasedEvent(movieId, quantity, totalPrice, convenienceFees, currencyCode);</code></li>
+<li><code>TrailerVoteSdk.instance().logShowtimesPageShownEvent(movieId);</code></li>
+</ul>
+
+<p>Call these methods in corresponding places in your app to submit the corresponding events.</p>
+
+<p>When recognition screen is opened, the event will be submitted automatically.</p>
 
       </div>
       <div class="dark-box">
