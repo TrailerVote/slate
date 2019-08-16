@@ -695,20 +695,20 @@ Both the analytics and the remote notifications capabilities require the client 
 <img src="images/img_sdk_location.png" title="Android SDK location" alt="alt text" /></li>
 <li>In you project <code>gradle</code> file add libraries directory to repositories list.</li>
 </ol>
-<pre class="highlight java tab-java"><code><span class="n">allprojects</span> <span class="o">{</span>
-    <span class="n">repositories</span> <span class="o">{</span>
-        <span class="n">maven</span> <span class="o">{</span>
-            <span class="n">url</span> <span class="s">"libs"</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<pre class="highlight properties tab-properties"><code><span class="err">allprojects</span> <span class="err">{</span>
+    <span class="err">repositories</span> <span class="err">{</span>
+        <span class="err">maven</span> <span class="err">{</span>
+            <span class="err">url</span> <span class="err">"libs"</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+<span class="err">}</span>
 </code></pre>
 <ol>
 <li>In your app module <code>gradle</code> file add TrailerVote SDK dependency:</li>
 </ol>
-<pre class="highlight java tab-java"><code><span class="n">dependencies</span> <span class="o">{</span>
-    <span class="n">implementation</span> <span class="s">"com.trailervote:trailervotesdk:1.0.0@aar"</span>
-<span class="o">}</span>
+<pre class="highlight properties tab-properties"><code><span class="err">dependencies</span> <span class="err">{</span>
+    <span class="err">implementation</span> <span class="err">"</span><span class="py">com.trailervote</span><span class="p">:</span><span class="s">trailervotesdk:1.0.0@aar"</span>
+<span class="err">}</span>
 </code></pre><h2 id='getting-started-2'>Getting Started</h2>
 <p>The TrailerVote SDK contains a main class (<a href="/android"><code>TrailerVoteSdk</code></a>) which contains all the methods necessary for adding the TrailerVote experience to your app.</p>
 
