@@ -692,24 +692,22 @@ Both the analytics and the remote notifications capabilities require the client 
 <ol>
 <li>Contact TrailerVote for the the latest Android SDK.</li>
 <li>Copy <code>com</code> directory into your project libraries directory. Example: <code>YourAppDir/app/libs/</code>
-<img src="images/img_sdk_location.png" title="Android SDK location" alt="alt text" /></li>
-</ol>
-<pre class="highlight properties tab-properties"><code><span class="err">allprojects</span> <span class="err">{</span>
-    <span class="err">repositories</span> <span class="err">{</span>
-        <span class="err">maven</span> <span class="err">{</span>
-            <span class="err">url</span> <span class="err">"libs"</span>
-        <span class="err">}</span>
-    <span class="err">}</span>
-<span class="err">}</span>
-</code></pre>
-<ol>
-<li>In you project <code>gradle</code> file add libraries directory to repositories list.</li>
-</ol>
-<pre class="highlight properties tab-properties"><code><span class="err">dependencies</span> <span class="err">{</span>
-    <span class="err">implementation</span> <span class="err">"</span><span class="py">com.trailervote</span><span class="p">:</span><span class="s">trailervotesdk:1.0.0@aar"</span>
-<span class="err">}</span>
-</code></pre>
-<ol>
+<img src="images/img_sdk_location.png" title="Android SDK location" alt="alt text" />
+<code>properties
+allprojects {
+repositories {
+    maven {
+        url &quot;libs&quot;
+    }
+}
+}
+</code></li>
+<li>In you project <code>gradle</code> file add libraries directory to repositories list.
+<code>properties
+dependencies {
+implementation &quot;com.trailervote:trailervotesdk:1.0.0@aar&quot;
+}
+</code></li>
 <li>In your app module <code>gradle</code> file add TrailerVote SDK dependency:</li>
 </ol>
 <h2 id='getting-started-2'>Getting Started</h2>
