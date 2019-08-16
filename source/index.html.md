@@ -481,7 +481,7 @@ Call these methods in corresponding places in your app to submit the correspondi
  ![alt text](images/img_sdk_location.png "Android SDK location")
 3. In you project `gradle` file add libraries directory to repositories list.
 
-```java
+```properties
 allprojects {
     repositories {
         maven {
@@ -493,7 +493,7 @@ allprojects {
 
 4. In your app module `gradle` file add TrailerVote SDK dependency:
 
-```java
+```properties
 dependencies {
     implementation "com.trailervote:trailervotesdk:1.0.0@aar"
 }
