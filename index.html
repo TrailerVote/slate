@@ -693,24 +693,22 @@ Both the analytics and the remote notifications capabilities require the client 
 <li>Contact TrailerVote for the the latest Android SDK.</li>
 <li>Copy <code>com</code> directory into your project libraries directory. Example: <code>YourAppDir/app/libs/</code>
 <img src="images/img_sdk_location.png" title="Android SDK location" alt="alt text" /></li>
-</ol>
-<pre class="highlight java tab-java"><code><span class="n">allprojects</span> <span class="o">{</span>
-    <span class="n">repositories</span> <span class="o">{</span>
-        <span class="n">maven</span> <span class="o">{</span>
-            <span class="n">url</span> <span class="s">"libs"</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre>
-<ol>
-<li>In you project <code>gradle</code> file add libraries directory to repositories list.</li>
-</ol>
-<pre class="highlight java tab-java"><code><span class="n">dependencies</span> <span class="o">{</span>
-    <span class="n">implementation</span> <span class="s">"com.trailervote:trailervotesdk:1.0.0@aar"</span>
-<span class="o">}</span>
-</code></pre>
-<ol>
-<li>In your app module <code>gradle</code> file add TrailerVote SDK dependency:</li>
+<li>In you project <code>gradle</code> file add libraries directory to repositories list.
+<code>java
+allprojects {
+repositories {
+    maven {
+        url &quot;libs&quot;
+    }
+}
+}
+</code></li>
+<li>In your app module <code>gradle</code> file add TrailerVote SDK dependency:
+<code>java
+dependencies {
+implementation &quot;com.trailervote:trailervotesdk:1.0.0@aar&quot;
+}
+</code></li>
 </ol>
 <h2 id='getting-started-2'>Getting Started</h2>
 <p>The TrailerVote SDK contains a main class (<a href="/android"><code>TrailerVoteSdk</code></a>) which contains all the methods necessary for adding the TrailerVote experience to your app.</p>
