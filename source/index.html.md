@@ -40,7 +40,7 @@ In order to use TrailerVote technology, you must have the following:
   ![TrailerVote framework included into project](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
 3. In your app Target Settings -> General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
   ![TrailerVote added to Embedded Binaries](/images/img_framework_embedding.png "TrailerVote Embedding")
-=======
+
 2. Drag **TrailerVoteSDK.framework** into your Xcode project tree:
   ![alt text](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
 3. In your app **Target Settings** -> **General** tab, under the **Embedded Binaries** section, click the **+** button and select the imported **TrailerVoteSDK.framework** item. Click the **Add** button.
@@ -479,7 +479,6 @@ Call these methods in corresponding places in your app to submit the correspondi
 1. Contact TrailerVote for the the latest Android SDK.
 2. Copy `com` directory into your project libraries directory. Example: `YourAppDir/app/libs/`
  ![alt text](images/img_sdk_location.png "Android SDK location")
-3. In you project `gradle` file add libraries directory to repositories list.
 
 ```java
 allprojects {
@@ -490,13 +489,19 @@ allprojects {
     }
 }
 ```
-4. In your app module `gradle` file add TrailerVote SDK dependency:
+
+3. In you project `gradle` file add libraries directory to repositories list.
+
 
 ```java
 dependencies {
     implementation "com.trailervote:trailervotesdk:1.0.0@aar"
 }
 ```
+
+4. In your app module `gradle` file add TrailerVote SDK dependency:
+
+
 
 ## Getting Started
 
