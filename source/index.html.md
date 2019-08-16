@@ -479,7 +479,7 @@ Call these methods in corresponding places in your app to submit the correspondi
 1. Contact TrailerVote for the the latest Android SDK.
 2. Copy `com` directory into your project libraries directory. Example: `YourAppDir/app/libs/`
  ![alt text](images/img_sdk_location.png "Android SDK location")
-
+3. In you project `gradle` file add libraries directory to repositories list.
 ```java
 allprojects {
     repositories {
@@ -489,17 +489,14 @@ allprojects {
     }
 }
 ```
-
-3. In you project `gradle` file add libraries directory to repositories list.
-
-
+4. In your app module `gradle` file add TrailerVote SDK dependency:
 ```java
 dependencies {
     implementation "com.trailervote:trailervotesdk:1.0.0@aar"
 }
 ```
 
-4. In your app module `gradle` file add TrailerVote SDK dependency:
+
 
 
 
