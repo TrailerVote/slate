@@ -474,7 +474,7 @@ Call these methods in corresponding places in your app to submit the correspondi
 
 
 #Android
-## Installation
+## Android Installation
 
 1. Contact TrailerVote for the the latest Android SDK.
 2. Copy `com` directory into your project libraries directory. Example: `YourAppDir/app/libs/`
