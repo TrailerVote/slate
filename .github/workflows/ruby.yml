@@ -17,10 +17,12 @@ jobs:
       with:
         ruby-version: 2.6.x
     - name: Build and publish
+      env:
+        SSHPASS: ${{ secrets.SSHPASS }}
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec middleman build --clean
-        DEBIAN_FRONTEND=noninteractive sudo apt update
-        DEBIAN_FRONTEND=noninteractive sudo apt install --yes rsync sshpass
+        DEBIAN_FRONTEND=noninteractive sudo apt-get update
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install --yes rsync sshpass
         sshpass -e rsync -rv -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' --delete build/ www-data@docs.stable.trailervote.com:/var/www/html
