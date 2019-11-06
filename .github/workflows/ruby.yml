@@ -1,0 +1,2 @@
+- name: Slate Documentation builder
+  uses: Decathlon/slate-builder-action@v1.0.0
