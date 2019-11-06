@@ -5,6 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - objective_c
   - swift
   - java
+  - ruby
 
 toc_footers:
   - © TrailerVote. CONFIDENTIAL.
@@ -15,7 +16,7 @@ search: true
 
 # Introduction
 
-The TrailerVote is a innovative software service that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema. Users are later sent notifications as a reminder that tickets for the movie they wanted see are now on sale.
+The TrailerVote is an innovative software service that enables movie-ticketing apps to increases user engagement and customer understanding by encouraging moviegoers to rate trailers as they are played on the big screen of the cinema. Users are later sent notifications as a reminder that tickets for the movie they wanted see are now on sale.
 
 Features include:
 
@@ -28,6 +29,8 @@ Features include:
 
 In order to use TrailerVote technology, you must have the following:
 
+**For iOS**
+
 - A movie-related mobile app
 - Xcode 9 or higher
 - iOS 10 or higher
@@ -35,18 +38,31 @@ In order to use TrailerVote technology, you must have the following:
 # iOS
 ## Installation
 
-1. Contact TrailerVote for the the latest iOS SDK.
-2. Drag TrailerVoteSDK.framework into your Xcode project tree:
-  ![TrailerVote framework included into project](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
-3. In your app Target Settings -> General tab, under the Embedded Binaries section, click the + button and select the imported TrailerVoteSDK.framework item. Click the Add button.
-  ![TrailerVote added to Embedded Binaries](/images/img_framework_embedding.png "TrailerVote Embedding")
+> Add the TrailerVoteSDK dependency to your Podfile:
 
-2. Drag **TrailerVoteSDK.framework** into your Xcode project tree:
-  ![alt text](/images/img_framework_in_project_tree.png "TrailerVote Framework in Xcode Project")
-3. In your app **Target Settings** -> **General** tab, under the **Embedded Binaries** section, click the **+** button and select the imported **TrailerVoteSDK.framework** item. Click the **Add** button.
-  ![alt text](/images/img_framework_embedding.png "TrailerVote Embedding")
+```ruby
+platform :ios, '10.0'
 
-##Getting Started
+use_frameworks!
+
+target 'YourAppName' do
+    pod 'TrailerVoteSDK'
+end
+```
+
+In your `Podfile` specify the `TrailerVoteSDK` pod to be used for your app target.
+
+> Run the following command to install the dependency:
+
+```
+pod install --repo-update
+```
+
+### Updating the SDK
+
+To update the SDK version to a new one, run the `pod repo update && pod update TrailerVoteSDK` command.
+
+## Getting Started
 
 > Importing the SDK
 
@@ -120,7 +136,7 @@ To start the pre-loading process of the trailer recognition data, call the `[[TV
 
 Once the data is downloaded, the trailer recognition feature will be available in offline, but please keep the data pre-load call triggered on your app launch so that the SDK could update the recognition data.
 
-> Forwarding the did finish launching method parameters to the SDK
+> Forwarding app launch options to the SDK
 
 ```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -141,6 +157,32 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```
 
 In order for the SDK to infer the application launch method (either by clicking the remote notification, opening a deep link or a manual launch), call the `[TVTrailerVoteFactory application:didFinishLaunchingWithOptions:]`/`TVTrailerVoteFactory.application(_:, didFinishLaunchingWithOptions:)` prior to calling the `[TVTrailerVoteFactory sharedFactory]`/`TVTrailerVoteFactory.shared()`.
+
+## Setting the data pre-load mode
+
+The SDK provides several data pre-load modes to fit the client needs such as bad network conditions etc. The default mode loads all the data during the pre-load process. Two other available options are `TVPreloadModeNoImagesPreload` that skips pre-downloading the movie images until a particular image is needed for showing up in the voting card and `TVPreloadModeNoImagesAtAll` that completely disable the image load.
+
+> Setting the data pre-load mode
+
+```objective_c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
+    [[TVTrailerVoteFactory sharedFactory] setPreloadMode:TVPreloadModeNormal];
+    [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
+    return YES;
+}
+```
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
+    TVTrailerVoteFactory.shared().setPreloadMode(.normal)
+    TVTrailerVoteFactory.shared().launchDataPreload()
+    return true
+}
+```
+
+To set the pre-load mode, call the `TVTrailerVoteFactory.shared().setPreloadMode(<PRELOAD_MODE>)/[[TVTrailerVoteFactory sharedFactory] setPreloadMode:<PRELOAD_MODE>]` method after setting up the credentials for the SDK.
 
 ## Enabling and configuring the TrailerVote In-Theatre feature
 
@@ -354,8 +396,32 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-=======
 Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the `[TVTrailerVoteFactory setupAnalyticsToken:]`/`TVTrailerVoteFactory.setupAnalyticsToken(_:)` method. The key events will be sent automatically by the SDK.
+
+> Forwarding the app launch options to the SDK
+
+```
+//objective_c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
+    [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
+    [TVTrailerVoteFactory application:application didFinishLaunchingWithOptions:launchOptions];
+    [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
+    return YES;
+}
+
+//swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
+    TVTrailerVoteFactory.setupAnalyticsToken("YOUR_ANALYTICS_TOKEN")
+    TVTrailerVoteFactory.application(application, didFinishLaunchingWithOptions: launchOptions)
+    TVTrailerVoteFactory.shared().launchDataPreload()
+    return true
+}
+```
+
+Some analytics events require the SDK to know the current launch method for the app (organic, via a remote notification, deeplink etc). In order for the SDK to be able to do that, call the `[TVTrailerVoteFactory application:didFinishLaunchingWithOptions:]/TVTrailerVoteFactory.application(_:didFinishLaunchingWithOptions:)` method after setting the analytics token.
 
 > Setting up the remote notifications capability
 
@@ -442,6 +508,16 @@ Upon receiving the remote notification's payload dictionary in `-application:did
 {
     // navigate to the corresponding movie showtimes screen
 }
+
+- (void)openTrailerRecognition
+{
+    // handle the trailer recognition screen launch
+}
+
+- (void)presentWebViewForURL:(nonnull NSURL *)url
+{
+    // present a web view for the given URL
+}
 @end
 ```
 ```swift
@@ -456,6 +532,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVRemoteNotificationsDele
     
     func openShowtimes(forMovieID movieID: Int) {
         // navigate to the corresponding movie showtimes screen
+    }
+    
+    func openTrailerRecognition() {
+        // handle the trailer recognition screen launch
+    }
+    
+    func presentWebView(for url: URL) {
+        // present a web view for the given URL
     }
 }
 ```
