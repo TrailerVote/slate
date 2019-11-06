@@ -16,11 +16,11 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build and test with Rake
+    - name: Build and publish
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec middleman build --clean
-        apt update
-        DEBIAN_FRONTEND=noninteractive apt install --yes rsync sshpass
+        DEBIAN_FRONTEND=noninteractive sudo apt update
+        DEBIAN_FRONTEND=noninteractive sudo apt install --yes rsync sshpass
         sshpass -e rsync -rv -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' --delete build/ www-data@docs.stable.trailervote.com:/var/www/html
