@@ -384,8 +384,7 @@ The view incapsulates the necessary logic for fetching the voted movies list, pr
 
 > Forwarding the app launch options to the SDK
 
-```
-//objective_c
+```objective_c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
@@ -393,8 +392,8 @@ The view incapsulates the necessary logic for fetching the voted movies list, pr
     [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
     return YES;
 }
-
-//swift
+```
+```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
     TVTrailerVoteFactory.application(application, didFinishLaunchingWithOptions: launchOptions)
