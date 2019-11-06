@@ -241,11 +241,11 @@ class ViewController: UIViewController, TVAudioRecognitionViewControllerNewDeleg
 
 The main feature of the SDK is the movie trailers recognition. To present the full-screen UI of the feature, call the `[[TVTrailerVoteFactory sharedFactory] presentTrailerRecognitionViewController:recognitionDelegate:]`/`TVTrailerVoteFactory.shared().presentTrailerRecognitionViewController(_:recognitionDelegate:)` method.
 
-<img src="img_recognition_screen.png" />
+<img src="images/img_recognition_screen.png" />
 
 When the movie trailer is recognized, the voting buttons are shown with the prompt for the user to vote.
 
-<img src="img_recognition_screen_voting.png" />
+<img src="images/img_recognition_screen_voting.png" />
 
 After the user votes, the feedback is recorded internally in the SDK and transmitted to TrailerVote. This means that this information is visible in the voted trailers feed and any API that exposes the vote.
 
@@ -275,7 +275,7 @@ The SDK provides the ability to set the logo image displayed on the initial movi
 
 ## Presenting the TrailerVote Video Player
 
-<img src="img_video_player.png" />
+<img src="images/img_video_player.png" />
 
 Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the **TrailerVote Video Player**. The TrailerVote Video Player will provide a prompt for voting during the video playback.
 
@@ -304,7 +304,7 @@ To present the video player, call the `[[TVTrailerVoteFactory sharedFactory] pre
 
 ## Integrating the Movies carousel view
 
-<img src="img_movies_carousel.png" />
+<img src="images/img_movies_carousel.png" />
 
 > Embedding the Movies carousel view
 
@@ -341,7 +341,7 @@ The SDK provies the ready for use movies carousel view that can be easily integr
 
 ## Integrating the Voted movies feed view
 
-<img src="img_voted_movies_feed.png" />
+<img src="images/img_voted_movies_feed.png" />
 
 > Embedding the Voted movies feed view
 
@@ -376,7 +376,7 @@ class ViewController: UIViewController {
 
 The SDK also provides the voted movies feed view for presenting the list of movies the user has previously voted on. To embed the view into your UI, call the `[[TVTrailerVoteFactory sharedFactory] votedTrailerFeedViewControllerEmbeddedInParentViewController:parentView:]`/`TVTrailerVoteFactory.shared().votedTrailerFeedViewControllerEmbedded(inParentViewController:parentView:)` method.
 
-<img src="img_voted_movies_feed_filter.png" />
+<img src="images/img_voted_movies_feed_filter.png" />
 
 The view incapsulates the necessary logic for fetching the voted movies list, provides the capability of filtering the movies by the vote type (all, positive, neutral or negative), as well as launching the **TrailerVote Video Player** upon the selection of the particular item in the feed.
 
