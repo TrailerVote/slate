@@ -382,28 +382,6 @@ The view incapsulates the necessary logic for fetching the voted movies list, pr
 
 ## Enabling the Analytics and the Remote Notifications capabilities
 
-> Setting up the analytics token
-
-```objective_c
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
-    [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
-    [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
-    return YES;
-}
-```
-```swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
-    TVTrailerVoteFactory.setupAnalyticsToken("YOUR_ANALYTICS_TOKEN")
-    TVTrailerVoteFactory.shared().launchDataPreload()
-    return true
-}
-```
-
-Both the analytics and the remote notifications capabilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the `[TVTrailerVoteFactory setupAnalyticsToken:]`/`TVTrailerVoteFactory.setupAnalyticsToken(_:)` method. The key events will be sent automatically by the SDK.
-
 > Forwarding the app launch options to the SDK
 
 ```
@@ -411,7 +389,6 @@ Both the analytics and the remote notifications capabilities require the client 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
-    [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
     [TVTrailerVoteFactory application:application didFinishLaunchingWithOptions:launchOptions];
     [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
     return YES;
@@ -420,7 +397,6 @@ Both the analytics and the remote notifications capabilities require the client 
 //swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
-    TVTrailerVoteFactory.setupAnalyticsToken("YOUR_ANALYTICS_TOKEN")
     TVTrailerVoteFactory.application(application, didFinishLaunchingWithOptions: launchOptions)
     TVTrailerVoteFactory.shared().launchDataPreload()
     return true
@@ -458,7 +434,6 @@ For enabling the remote notifications capability, start by calling the `[[TVTrai
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
-    [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
     [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
     id remoteNotificationPayload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationPayload && [remoteNotificationPayload isKindOfClass:NSDictionary.class])
@@ -477,7 +452,6 @@ For enabling the remote notifications capability, start by calling the `[[TVTrai
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
-    TVTrailerVoteFactory.setupAnalyticsToken("YOUR_ANALYTICS_TOKEN")
     TVTrailerVoteFactory.shared().launchDataPreload()
     if let remoteNotificationPayload = launchOptions?[.remoteNotification] as? [AnyHashable: Any] {
         TVTrailerVoteFactory.shared().processPushNotificationPayload(remoteNotificationPayload)
@@ -504,7 +478,6 @@ Upon receiving the remote notification's payload dictionary in `-application:did
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
-    [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
     [[TVTrailerVoteFactory sharedFactory] launchDataPreload];
     [[TVTrailerVoteFactory sharedFactory].remoteNotificationsDelegate = self;
     return YES;
@@ -531,7 +504,6 @@ Upon receiving the remote notification's payload dictionary in `-application:did
 class AppDelegate: UIResponder, UIApplicationDelegate, TVRemoteNotificationsDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         TVTrailerVoteFactory.setupCredentials(withUsername:"YOUR_USERNAME" password:"YOUR_PASSWORD")
-        TVTrailerVoteFactory.setupAnalyticsToken("YOUR_ANALYTICS_TOKEN")
         TVTrailerVoteFactory.shared().launchDataPreload()
         TVTrailerVoteFactory.shared().remoteNotificationsDelegate = self
     }
