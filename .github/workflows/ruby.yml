@@ -21,3 +21,6 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec middleman build --clean
+        apt update
+        DEBIAN_FRONTEND=noninteractive apt install --yes rsync sshpass
+        sshpass -e rsync -rv -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' --delete build/ www-data@docs.stable.trailervote.com:/var/www/html
