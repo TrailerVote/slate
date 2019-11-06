@@ -4,8 +4,9 @@ title: TrailerVote Documentation
 language_tabs: # must be one of https://git.io/vQNgJ
   - objective_c
   - swift
-  - java
   - ruby
+  - kotlin
+  - gradle
 
 toc_footers:
   - © TrailerVote. CONFIDENTIAL.
@@ -34,6 +35,11 @@ In order to use TrailerVote technology, you must have the following:
 - A movie-related mobile app
 - Xcode 9 or higher
 - iOS 10 or higher
+
+**For Android**
+
+- A movie-related mobile app
+- Android 4.4 (API 19) or higher
 
 # iOS
 ## Installation
@@ -218,13 +224,13 @@ class ViewController: UIViewController, TVAudioRecognitionViewControllerNewDeleg
     func launchTrailerRecognition() {
         TVTrailerVoteFactory.shared().presentTrailerRecognitionViewController(self, recognitionDelegate: self)
     }
-    
+
     func audioRecognitionViewController(_ viewController: UIViewController,
                                         userDidTapOnFacebookLoginButtonWithSubscriptionEnabled subscriptionEnabled: Bool,
                                         hostViewController: UIViewController) {
         //proceed with login
     }
-    
+
     func audioRecognitionViewController(_ viewController: UIViewController,
                                         userDidTapOnTwitterLoginButtonWithSubscriptionEnabled subscriptionEnabled: Bool,
                                         hostViewController: UIViewController) {
@@ -271,7 +277,7 @@ The SDK provides the ability to set the logo image displayed on the initial movi
 
 <img src="img_video_player.png" />
 
-Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the **TrailerVote Video Player**. The TrailerVote Video Player will provide a prompt for voting during the video playback. 
+Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the **TrailerVote Video Player**. The TrailerVote Video Player will provide a prompt for voting during the video playback.
 
 > Launching the video player
 
@@ -495,7 +501,7 @@ Upon receiving the remote notification's payload dictionary in `-application:did
 @end
 
 @implementation AppDelegate
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [TVTrailerVoteFactory setupCredentialsWithUsername:@"YOUR_USERNAME"password:@"YOUR_PASSWORD"];
     [TVTrailerVoteFactory setupAnalyticsToken:@"YOUR_ANALYTICS_TOKEN"];
@@ -529,15 +535,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVRemoteNotificationsDele
         TVTrailerVoteFactory.shared().launchDataPreload()
         TVTrailerVoteFactory.shared().remoteNotificationsDelegate = self
     }
-    
+
     func openShowtimes(forMovieID movieID: Int) {
         // navigate to the corresponding movie showtimes screen
     }
-    
+
     func openTrailerRecognition() {
         // handle the trailer recognition screen launch
     }
-    
+
     func presentWebView(for url: URL) {
         // present a web view for the given URL
     }
@@ -560,30 +566,31 @@ Call these methods in corresponding places in your app to submit the correspondi
 #Android
 ## Android Installation
 
-1. Contact TrailerVote for the the latest Android SDK.
-2. Copy `com` directory into your project libraries directory. Example: `YourAppDir/app/libs/`
- ![alt text](images/img_sdk_location.png "Android SDK location")
-```properties
-allprojects {
-    repositories {
-        maven {
-            url "libs"
-        }
-    }
+```gradle
+repositories {
+  maven {
+    url "https://pods.dev.trailervote.com/android/"
+  }
 }
-```
-3. In you project `gradle` file add libraries directory to repositories list.
-```properties
-dependencies {
-    implementation "com.trailervote:trailervotesdk:1.0.0@aar"
-}
-```
-4. In your app module `gradle` file add TrailerVote SDK dependency:
 
+dependencies {
+  implementation ('com.trailervote:trailervote-sdk:1.2.0@aar') {
+    transitive = true
+  }
+}
+```
+
+Add the TrailerVoteSDK dependency to your build.gradle file:
 
 ## Getting Started
 
-The TrailerVote SDK contains a main class ([`TrailerVoteSdk`](/android)) which contains all the methods necessary for adding the TrailerVote experience to your app.
+The TrailerVote SDK contains a main class ([`TrailerVoteSdk`](/#android)) which contains all the methods necessary for adding the TrailerVote experience to your app.
+
+```kotlin
+import com.trailervote.trailervotesdk.TrailerVoteSdk
+```
+
+Import the SDK to use the public interface and call methods.
 
 1. Configuring and initializing the **TrailerVote SDK**
 2. Enabling and configuring the **TrailerVote In-Theatre feature**
@@ -592,9 +599,21 @@ The TrailerVote SDK contains a main class ([`TrailerVoteSdk`](/android)) which c
 
 ## Configuring and initializing the TrailerVote SDK
 
-The initialization process of the SDK begins immediately at the first call of `TrailerVoteSdk.init(context, backendEndpoint, username, password);`. All internal dependencies are initialized as well as public singleton instances.
+```kotlin
+TrailerVoteSdk.init(context, authority, endpoint, username, password)
+// or
+TrailerVoteSdk.init(context, authority, endpoint, username, password, imageLoadingMode)
+```
 
-To start the pre-loading process of the trailer recognition data, call the `TrailerVoteSdk.instance().load();` method.
+The initialization process of the SDK begins immediately at the first call of the `init` method. All internal dependencies are initialized as well as public singleton instances.
+
+```kotlin
+TrailerVoteSdk.instance().loadData()
+// or
+TrailerVoteSdk.instance().loadData(delayInMilliseconds)
+```
+
+To start the pre-loading process of the trailer recognition data, call the `loadData` method.
 
 Once the data is downloaded, the trailer recognition feature will be available in offline, but please keep the data pre-load call triggered on your app launch so that the SDK could update the recognition data.
 
@@ -604,10 +623,10 @@ The main feature of the SDK is the audio recognition of movie trailers. We use t
 
 ![TrailerVote main listening screen](/images/img_recognition_screen.jpg "TrailerVote Screenshot")
 
-Navigate to recognition screen by calling the -`TrailerVoteSdk.instance().openRecognitionScreen(Context)` method of the main SDK class:
+Navigate to recognition screen by calling the `openRecognitionScreen` method of the main SDK class:
 
-```java
-boolean success = TrailerVoteSdk.instance().openRecognitionScreen(context);
+```kotlin
+val success = TrailerVoteSdk.instance().openRecognitionScreen(context)
 if (!success) {
   // error
 }
@@ -630,71 +649,59 @@ You can override the default voting card background as well by adding the drawab
 
 Because moviegoers watch trailers in your movie app, we recommend replacing your video player with the **TrailerVote Video Player**. The TrailerVote Video Player will provide a prompt during the video playback.
 
-To launch the video player, call the
+To launch the video player, call the `openVideoPlayerForTrailer` method.
 
-```java
-TrailerVoteSdk.instance().openVideoPlayerWithMovieIDs(context, anArrayOfMovieIDs, initialIndex);
+```kotlin
+TrailerVoteSdk.instance().openVideoPlayerForTrailer(context, trailerUrl)
 ```
 
 Given an array of movie ids, the video player will automatically manage the playback queue of trailers and by providing the initial index you can change the initial trailer to start playback with.
 
-## Enabling the Analytics and the Remote Notifications capabilities.
+## Enabling the Analytics and the Notifications capabilities.
 
-Both the analytics and the remote notifications capanilities require the client token to be provided to the SDK. To begin the setup, provide your token by calling the `setRemoteAnalyticsToken(YOUR_ANALYTICS_TOKEN)` method. The key events will be sent automatically by the SDK.
-
-```java
-TrailerVoteSdk.instance().setRemoteAnalyticsToken(YOUR_ANALYTICS_TOKEN);
+```kotlin
+TrailerVoteSdk.instance().setClassForNotificationIntent(MainActivity::class.java)
 ```
 
-For enabling the remote notifications capability, start by calling `enablePushNotifications(deviceToken)` and `setClassForNotificationIntent(class)` methods.
+Set the class for notification intent for enabling local notifications.
 
-```java
-FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-    @Override
-    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-        if (task.isSuccessful()) {
-            TrailerVoteSdk.instance().enablePushNotifications(task.getResult().getToken());
-            TrailerVoteSdk.instance().setClassForNotificationIntent(MainActivity.class);
+```kotlin
+public override fun onNewIntent(intent: Intent) {
+    this.intent = intent
+    if (intent.action == Intent.ACTION_MAIN) {
+        val extras = intent.extras
+        if (extras?.containsKey("trailervote_notification") == true) {
+            TrailerVoteSdk.instance().onNotificationReceived(extras) { action, param ->
+                when (action) {
+                    TrailerVoteSdk.NotificationAction.OPEN_RECOGNITION -> {
+                      //
+                    }
+                    TrailerVoteSdk.NotificationAction.OPEN_MOVIE_DETAILS -> {
+                      val movieId = param
+                      //
+                    }
+                    TrailerVoteSdk.NotificationAction.OPEN_URL -> {
+                      val url = param
+                      //
+                    }
+                    TrailerVoteSdk.NotificationAction.NONE -> {
+                      //
+                    }
+                }
+            }
         }
     }
 }
 ```
 
-When the notification is received, call the `onNotificationReceived(intentExtras, listener)` method. In order to communicate back to your app after processing the notification's extras, the SDK provides `NotificationActionListener` interface. Implement this interface to react to the notification processing result.
+When the notification is received, call the `onNotificationReceived` on the TrailerVoteSDK instance. In order to communicate back to your app after processing the notification's extras, the SDK provides `NotificationActionListener` interface. Implement this interface to react to the notification processing result.
 
-```java
-if (intent.getAction() == Intent.ACTION_MAIN) {
-  Bundle extras = intent.getExtras();
-  if (extras.containsKey("trailervote_notification") {
-    TrailerVoteSdk.instance().onNotificationReceived(extras, new NotificationActionListener() {
-      @Override
-      void onNotificationAction(@NonNull NotificationAction action, @Nullable String movieId) {
-        switch (action) {
-          case NotificationAction.OPEN_RECOGNITION:
-            
-            break;
-          case NotificationAction.OPEN_MOVIE_DETAILS:
-            
-            break;
-          case NotificationAction.OPEN_MOVIE_SHOWTIMES:
-            
-            break;
-          case default:
-            
-            break;
-        }
-      }
-    });
-  }
-}
+To track analytics events, the SDK provides several methods. The key events will be sent automatically by the SDK.
+
+```kotlin
+TrailerVoteSdk.instance().logTicketPurchasedEvent(movieId, quantity, totalPrice, convenienceFees, currencyCode)
+TrailerVoteSdk.instance().logShowtimesPageShownEvent(movieId)
 ```
-
-In some time later, when you wish to stop the remote notifications capability, call the `disablePushNotifications` method to remove current device token from the notifications recipients list.
-
-To track analytics events, the SDK provides several methods:
-
-- `TrailerVoteSdk.instance().logTicketPurchasedEvent(movieId, quantity, totalPrice, convenienceFees, currencyCode);`
-- `TrailerVoteSdk.instance().logShowtimesPageShownEvent(movieId);`
 
 Call these methods in corresponding places in your app to submit the corresponding events.
 
