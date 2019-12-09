@@ -43,7 +43,7 @@ In order to use TrailerVote technology, you must have the following:
 
 ## Installing the SDK using CocoaPods
 
-```ruby
+```
 target 'TargetNameForYourApp' do
     pod 'TrailerVoteSDK'
 end
@@ -51,7 +51,7 @@ end
 
 In your `Podfile` add the following code:
 
-```bash
+```
 pod repo update && pod install
 ```
 
@@ -61,7 +61,7 @@ After the installation is completed, open the `.xcworkspace` file.
 
 ## Credentials setup
 
-```xml
+```
 <key>TrailerVoteSDKAuthToken</key>
 <string>YOUR_AUTH_TOKEN</string>
 ```
@@ -153,7 +153,7 @@ Copy and paste to integrate the following code into your application.
 
 ## In-Cinema Experience
 
-```xml
+```
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone access is required for the In-Cinema experience</string>
 ```
